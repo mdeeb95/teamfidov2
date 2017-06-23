@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hello Web - Processing.js Test</title>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script src="processing.js"></script>
+</head>
+<body>
+	<h1>Processing.js Test</h1>
+	<p>This is my first Processing.js web-based sketch:</p>
+	<button onClick="lockToggle()" type="button" class="btn btn-warning btn-lg">
+	  <span class="glyphicon glyphicon glyphicon-ban-circle" aria-hidden="true">Lock</span>
+	</button>
+	<!-- Trigger the modal with a button -->
+	<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add Shape</button>
+	<!-- Modal -->
+	<div id="myModal" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">Add Shape</h4>
+	      </div>
+	      <div class="modal-body">
+	     	<h4>Shape Type</h4>
+	        <select id="newshapetype" class="form-control">
+			  <option value="circle">Circle</option>
+			  <option value="triangle">Triangle</option>
+			  <option value="square">Square</option>
+			</select>
+			<h4>Size (Pixels)</h4>
+			<div class="input-group">
+		      <input id="newshapesize" type="text" class="form-control">
+		      <span class="input-group-btn">
+		        <button class="btn btn-secondary" type="button">px</button>
+		      </span>
+		    </div>
+			<h4>Color</h4>
+			Colorpicker -- Add Later
+	      </div>
+	      <div class="modal-footer">
+	      	<button type="button" class="btn btn-primary" onClick="createShape()">Create</button>
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+
+	  </div>
+	</div>
+	<br/><br/>
+	<canvas id="mainCanvas" data-processing-sources="myprocessing.pde"></canvas>
+	<script src="script.js"></script>
+</body>
+</html>
