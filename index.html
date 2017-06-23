@@ -12,49 +12,64 @@
 	<script src="processing.js"></script>
 </head>
 <body>
-	<h1>Processing.js Test</h1>
-	<p>This is my first Processing.js web-based sketch:</p>
-	<button onClick="lockToggle()" type="button" class="btn btn-warning btn-lg">
-	  <span class="glyphicon glyphicon glyphicon-ban-circle" aria-hidden="true">Lock</span>
-	</button>
-	<!-- Trigger the modal with a button -->
-	<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add Shape</button>
-	<!-- Modal -->
-	<div id="myModal" class="modal fade" role="dialog">
-	  <div class="modal-dialog">
-	    <!-- Modal content-->
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal">&times;</button>
-	        <h4 class="modal-title">Add Shape</h4>
-	      </div>
-	      <div class="modal-body">
-	     	<h4>Shape Type</h4>
-	        <select id="newshapetype" class="form-control">
-			  <option value="circle">Circle</option>
-			  <option value="triangle">Triangle</option>
-			  <option value="square">Square</option>
-			</select>
-			<h4>Size (Pixels)</h4>
-			<div class="input-group">
-		      <input id="newshapesize" type="text" class="form-control">
-		      <span class="input-group-btn">
-		        <button class="btn btn-secondary" type="button">px</button>
-		      </span>
-		    </div>
-			<h4>Color</h4>
-			Colorpicker -- Add Later
-	      </div>
-	      <div class="modal-footer">
-	      	<button type="button" class="btn btn-primary" onClick="createShape()">Create</button>
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	      </div>
-	    </div>
+	<!--NAVIGATION ONLY FOR LOOKS REALLY-->
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">Team FIDO</a>
+			</div>
+		</div><!-- /.container-fluid -->
+	</nav>
 
-	  </div>
+	<div class="container-fluid">
+		<div class="col-md-11">
+			<!--THIS IS ACTUAL CODE THAT MATTERS -->
+			<button onClick="lockToggle()" type="button" class="btn btn-warning btn-lg">
+				<span class="glyphicon glyphicon glyphicon-ban-circle" aria-hidden="true">Lock</span>
+			</button>
+			<button onClick="lockToggle()" type="button" class="btn btn-danger btn-lg">Begin Recording</button>
+			<button onClick="lockToggle()" type="button" class="btn btn-success btn-lg">End Recording</button>
+			<!-- Trigger the modal with a button -->
+			<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add Shape</button>
+			<!-- Modal -->
+			<div id="myModal" class="modal fade" role="dialog">
+				<div class="modal-dialog">
+					<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">Add Shape</h4>
+						</div>
+						<div class="modal-body">
+							<h4>Shape Type</h4>
+							<select id="newshapetype" class="form-control">
+								<option value="circle">Circle</option>
+								<option value="triangle">Triangle</option>
+								<option value="square">Square</option>
+							</select>
+							<h4>Size (Pixels)</h4>
+							<div class="input-group">
+								<input id="newshapesize" type="text" class="form-control">
+								<span class="input-group-btn">
+									<button class="btn btn-secondary" type="button">px</button>
+								</span>
+							</div>
+							<h4>Color</h4>
+							Colorpicker -- Add Later
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" onClick="createShape()">Create</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<br/><br/>
+			<canvas id="mainCanvas" data-processing-sources="myprocessing.pde"></canvas>
+		</div>
 	</div>
-	<br/><br/>
-	<canvas id="mainCanvas" data-processing-sources="myprocessing.pde"></canvas>
 	<script src="script.js"></script>
 </body>
 </html>
