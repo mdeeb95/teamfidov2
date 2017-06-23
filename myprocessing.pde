@@ -3,9 +3,9 @@ var shapesLocked = false;
  
 void setup() {
     // createCanvas(displayWidth,displayHeight);
-    size(500, 500);
+    size(1300, 700);
     for (var i = 0; i < 3; i++) {
-        shapes.push(new Box(random(255), random(10, 30)));
+        shapes.push(new Box(random(255), random(10, 100)));
     }
     for (var i = 0; i < 3; i++) {
         shapes.push(new Circle(random(255), random(10, 30)));
@@ -23,17 +23,18 @@ void mousePressed() {
 	if (!shapesLocked) {
     for (var i = 0; i < shapes.length; i++) {
         if (shapes[i].shapeover == true) {
-            shapes[i].locked = true;
-            print("mouse is pressed")
-        } else {
-            shapes[i].locked = false;
-            print("mouse isn't pressed")
-        }
-        shapes[i].xoffset = mouseX - shapes[i].xpos;
-        shapes[i].yoffset = mouseY - shapes[i].ypos
-        print(shapes[i].locked);
-    }
+	            shapes[i].locked = true;
+	            print("mouse is pressed")
+	        } else {
+	            shapes[i].locked = false;
+	            print("mouse isn't pressed")
+	        }
+	        shapes[i].xoffset = mouseX - shapes[i].xpos;
+	        shapes[i].yoffset = mouseY - shapes[i].ypos
+	        print(shapes[i].locked);
+	    }
 	}
+	console.log("mousex: "+mouseX+" mouseY: "+mouseY);
     return false;
 }
  
@@ -65,7 +66,7 @@ boolean createNewShape(type, size, color) {
 			shapes.push(newcircle);
 			return true;
 			case 'square':
-			var newbox = new Box(random(255), size);
+			var newbox = new Box(random(255), size / 2);
 			shapes.push(newbox);
 			return true;
 			case 'triangle':
@@ -80,6 +81,7 @@ void Box(tempColor, tempSize) {
     this.c = tempColor
     this.xpos = random(width);
     this.ypos = random(height);
+    console.log(tempSize);
     this.shapesize = tempSize;
     this.shapeover = false;
     this.locked = false;
