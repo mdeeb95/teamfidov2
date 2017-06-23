@@ -59,14 +59,15 @@ void lockShapes() {
 }
 
 boolean createNewShape(type, size, color) {
+	console.log(color);
 	if (type != null && size > 0) {
 		switch(type) {
 			case 'circle':
-			var newcircle = new Circle(random(255), size);
+			var newcircle = new Circle(color, size);
 			shapes.push(newcircle);
 			return true;
 			case 'square':
-			var newbox = new Box(random(255), size / 2);
+			var newbox = new Box(color, size / 2);
 			shapes.push(newbox);
 			return true;
 			case 'triangle':
@@ -106,7 +107,7 @@ void Box(tempColor, tempSize) {
         } else {
             this.shapeover = false;
             noStroke();
-            fill(this.c);
+            fill(this.c.r, this.c.g, this.c.b);
         }
         rect(this.xpos, this.ypos, this.shapesize, this.shapesize, 7);
     };
@@ -136,7 +137,7 @@ void Circle(tempColor, tempSize) {
         } else {
             this.shapeover = false;
             noStroke();
-            fill(this.c);
+            fill(this.c.r, this.c.g, this.c.b);
         }
         ellipse(this.xpos, this.ypos, this.shapesize, this.shapesize);
     };

@@ -7,9 +7,12 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<!-- Optional theme -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	<link rel="stylesheet" href="bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.css">
 	<!-- Latest compiled and minified JavaScript -->
+	<link rel="stylesheet" href="stylesheet.css">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	<script src="processing.js"></script>
+	<script src="bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js"></script>
 </head>
 <body>
 	<!--NAVIGATION ONLY FOR LOOKS REALLY-->
@@ -31,9 +34,9 @@
 			<button onClick="lockToggle()" type="button" class="btn btn-danger btn-lg">Begin Recording</button>
 			<button onClick="lockToggle()" type="button" class="btn btn-success btn-lg">End Recording</button>
 			<!-- Trigger the modal with a button -->
-			<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add Shape</button>
+			<button type="button" class="btn btn-info btn-lg" data-toggle="modal" onClick="addShapeModal()" data-target="#myModal">Add Shape</button>
 			<!-- Modal -->
-			<div id="myModal" class="modal fade" role="dialog">
+			<div id="myModal" tabindex="-1" class="modal fade" role="dialog" aria-hidden="true">
 				<div class="modal-dialog">
 					<!-- Modal content-->
 					<div class="modal-content">
@@ -56,7 +59,10 @@
 								</span>
 							</div>
 							<h4>Color</h4>
-							Colorpicker -- Add Later
+							<div id="cp11" class="input-group colorpicker-component">
+							    <input type="text" value="#00AABB" class="form-control" />
+							    <span class="input-group-addon"><i></i></span>
+							</div>	
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-primary" onClick="createShape()">Create</button>
