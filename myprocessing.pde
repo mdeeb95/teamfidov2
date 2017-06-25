@@ -13,7 +13,7 @@ void setup() {
 }
  
 void draw() {
-    background(0, 200, 200);
+    background(0, 0, 0);
     for (var i = 0; i < shapes.length; i++) {
         shapes[i].show();
     }
@@ -58,6 +58,11 @@ void lockShapes() {
 	console.log("shapes are now locked");
 }
 
+void unlockShapes() {
+	shapesLocked = false;
+	console.log("shapes are now unlocked");
+}
+
 boolean createNewShape(type, size, color) {
 	console.log(color);
 	if (type != null && size > 0) {
@@ -95,7 +100,7 @@ void Box(tempColor, tempSize) {
         if (mouseX > this.xpos - this.shapesize && mouseX < this.xpos + this.shapesize &&
             mouseY > this.ypos - this.shapesize && mouseY < this.ypos + this.shapesize) {
             this.shapeover = true;
-            fill(255);
+            fill(this.c.r, this.c.g, this.c.b);
  
             if (mousePressed && this.shapeover == true) {
                 stroke(200, 79, 100);

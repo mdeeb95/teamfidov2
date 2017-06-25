@@ -1,8 +1,13 @@
 var processingInstance;
 
-function lockToggle() {
+function lockShapes() {
 	processingInstance = Processing.getInstanceById('mainCanvas');
 	processingInstance.lockShapes();
+}
+
+function unlockShapes() {
+	processingInstance = Processing.getInstanceById('mainCanvas');
+	processingInstance.unlockShapes();
 }
 
 function createShape() {
