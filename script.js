@@ -33,6 +33,27 @@ function play(){
     audioElement.play();
 }
 
+function saveCurrentLevel() {
+    processingInstance = Processing.getInstanceById('mainCanvas');
+    processingInstance.saveCurrentLevel(level);
+}
+
+function makeNewLevel() {
+    processingInstance = Processing.getInstanceById('mainCanvas');
+    var newlevelnum = processingInstance.makeNewLevel();
+    console.log(newlevelnum);
+    $('#mySelect').append($('<option>', {
+        value: newlevelnum,
+        text: newlevelnum
+    }));
+}
+
+function loadLevel() {
+    processingInstance = Processing.getInstanceById('mainCanvas');
+    processingInstance.loadLevel($('#leveldropdown').val());
+    console.log($('#leveldropdown').val());
+}
+
 function updateDPI() {
     processingInstance = Processing.getInstanceById('mainCanvas');
     processingInstance.updateDPI($("#screeninches").val());

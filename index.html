@@ -46,8 +46,19 @@
 			<br/>
 			<button type="button" class="btn btn-info btn-lg" data-toggle="modal" onClick="updateDPI()">Save Screen Size</button>
 			<hr/>
+			<div class="form-group">
+				<label for="sel1">Select list:</label>
+				<select class="form-control" id="leveldropdown">
+					<option>1</option>
+				</select>
+			</div>
+			<br/>
+			<button type="button" class="btn btn-info btn-lg" data-toggle="modal" onClick="loadLevel()">Load Level</button>
+			<hr/>
 			DEBUG:
 			<button onClick="logShapes()" type="button" class="btn btn-success btn-lg">Log Some Stuff</button>
+			<button onClick="saveCurrentLevel()" type="button" class="btn btn-success btn-lg">Save Level</button>
+			<button onClick="makeNewLevel()" type="button" class="btn btn-success btn-lg">Make New Level</button>
 			<button onClick="play()" type="button" class="btn btn-success btn-lg">Click Noise</button>
 			<!-- Trigger the modal with a button -->
 			<!-- Modal -->

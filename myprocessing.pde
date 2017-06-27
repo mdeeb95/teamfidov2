@@ -1,4 +1,5 @@
 var shapes = [];
+var currentLevelNum = 1;
 var levels = [];
 var clicks = [];
 var DPI = 110;
@@ -12,12 +13,15 @@ void setup() {
     for (var i = 0; i < 3; i++) {
         shapes.push(new Circle(random(255), 1));
     }
+    var startinglevel = new Level(shapes, currentLevelNum);
+    levels.push(startinglevel);
 }
  
 void draw() {
     background(0, 0, 0);
+    console.log(levels);
     for (var i = 0; i < shapes.length; i++) {
-        shapes[i].show();
+        levels[currentLevelNum - 1].shapes[i].show();
     }
 }
  
@@ -78,8 +82,27 @@ void updateDPI(screensize) {
     DPI = sqrt(sq(screen.width) + sq(screen.height)) / screensize;
 }
 
+void saveCurrentLevel() {
+    var currentLevel = levels[currentLevelNum];
+    currentLevel.shapes = shapes;
+    console.log(levels[currentLevelNum]);
+}
+
+void loadLevel(levelNumber) {
+    var newLevel = levels[levelNumber - 1];
+    shapes = newLevel.shapes;
+}
+
+void makeNewLevel() {
+    var newshapes = [];
+    var newlevel = new Level(newshapes, currentLevelNum + 1);
+    currentLevelNum++;
+    console.log(newlevel);
+    levels.push(newlevel);
+    return currentLevelNum;
+}
+
 boolean createNewShape(type, size, color) {
-	console.log(color);
 	if (type != null && size > 0) {
 		switch(type) {
 			case 'circle':
@@ -94,13 +117,14 @@ boolean createNewShape(type, size, color) {
 			//create tri, no tri func yet
 			break;
 		}
+        saveCurrentLevel();
 	}
 	return false;
 }
 
-void Level(shapes, name) {
-    this.shapes = shapes;
-    this.name = name;
+void Level(levelshapes, number) {
+    this.shapes = levelshapes;
+    this.number = number;
 }
 
 void ScreenPress(x, y, clickedshapes) {
@@ -122,11 +146,9 @@ void Box(tempColor, tempSize) {
     this.xoffset = 0;
     this.yoffset = 0;
     rectMode(RADIUS);
-    console.log(this.shapesize);
  
     this.show = function() {
         var pixelsize = this.shapesize * DPI;
-        console.log(pixelsize);
  
         if (mouseX > this.xpos - pixelsize && mouseX < this.xpos + pixelsize &&
             mouseY > this.ypos - pixelsize && mouseY < this.ypos + pixelsize) {
