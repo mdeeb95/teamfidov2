@@ -10,6 +10,11 @@ function unlockShapes() {
 	processingInstance.unlockShapes();
 }
 
+function logShapes() {
+    processingInstance = Processing.getInstanceById('mainCanvas');
+    processingInstance.logShapes();
+}
+
 function createShape() {
 	processingInstance = Processing.getInstanceById('mainCanvas');
 	var color = $('#cp11').colorpicker('getValue');
@@ -20,6 +25,17 @@ function createShape() {
 	} else {
 		console.log('didnt make the shape for some reason, probably alert user');
 	}
+}
+
+function play(){
+    var audioElement = document.createElement('audio');
+    audioElement.setAttribute('src', 'tap-crisp.mp3');
+    audioElement.play();
+}
+
+function updateDPI() {
+    processingInstance = Processing.getInstanceById('mainCanvas');
+    processingInstance.updateDPI($("#screeninches").val());
 }
 
 function hexToRgb(hex) {
@@ -40,14 +56,14 @@ function hexToRgb(hex) {
 function addShapeModal() {
 	$('#cp11').colorpicker({
 		customClass: 'colorpicker-2x',
-            sliders: {
-                saturation: {
-                    maxLeft: 200,
-                    maxTop: 200
-                },
-                hue: {
-                    maxTop: 200
-                },
-            }
-	});
+        sliders: {
+            saturation: {
+                maxLeft: 200,
+                maxTop: 200
+            },
+            hue: {
+                maxTop: 200
+            },
+        }
+    });
 }

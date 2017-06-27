@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Hello Web - Processing.js Test</title>
+	<title>Team FIDO Project V2</title>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -34,10 +34,22 @@
 			<button onClick="unlockShapes()" type="button" class="btn btn-warning btn-lg">
 				<span class="glyphicon glyphicon glyphicon-ban-circle" aria-hidden="true">Unlock</span>
 			</button>
-			<button onClick="lockToggle()" type="button" class="btn btn-danger btn-lg">Begin Recording</button>
-			<button onClick="lockToggle()" type="button" class="btn btn-success btn-lg">End Recording</button>
-			<!-- Trigger the modal with a button -->
+			<button onClick="lockShapes()" type="button" class="btn btn-success btn-lg">Begin Recording</button>
+			<button onClick="unlockShapes()" type="button" class="btn btn-danger btn-lg">End Recording</button>
 			<button type="button" class="btn btn-info btn-lg" data-toggle="modal" onClick="addShapeModal()" data-target="#myModal">Add Shape</button>
+			<hr/>
+			<label for="screeninches">Screen Size</label>
+			<div class="input-group col-md-3">
+				<input id="screeninches" type="text" class="form-control" aria-label="dots per inch">
+				<span class="input-group-addon">Inches</span>
+			</div>
+			<br/>
+			<button type="button" class="btn btn-info btn-lg" data-toggle="modal" onClick="updateDPI()">Save Screen Size</button>
+			<hr/>
+			DEBUG:
+			<button onClick="logShapes()" type="button" class="btn btn-success btn-lg">Log Some Stuff</button>
+			<button onClick="play()" type="button" class="btn btn-success btn-lg">Click Noise</button>
+			<!-- Trigger the modal with a button -->
 			<!-- Modal -->
 			<div id="myModal" tabindex="-1" class="modal fade" role="dialog" aria-hidden="true">
 				<div class="modal-dialog">
@@ -54,17 +66,17 @@
 								<option value="triangle">Triangle</option>
 								<option value="square">Square</option>
 							</select>
-							<h4>Size (Pixels)</h4>
+							<h4>Size (Inches)</h4>
 							<div class="input-group">
 								<input id="newshapesize" type="text" class="form-control">
 								<span class="input-group-btn">
-									<button class="btn btn-secondary" type="button">px</button>
+									<button class="btn btn-secondary" type="button">Inches</button>
 								</span>
 							</div>
 							<h4>Color</h4>
 							<div id="cp11" class="input-group colorpicker-component">
-							    <input type="text" value="#00AABB" class="form-control" />
-							    <span class="input-group-addon"><i></i></span>
+								<input type="text" value="#00AABB" class="form-control" />
+								<span class="input-group-addon"><i></i></span>
 							</div>	
 						</div>
 						<div class="modal-footer">

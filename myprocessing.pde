@@ -1,14 +1,16 @@
 var shapes = [];
+var levels = [];
+var clicks = [];
+var DPI = 110;
 var shapesLocked = false;
  
 void setup() {
-    // createCanvas(displayWidth,displayHeight);
-    size(1300, 700);
+    size(screen.width - 50, screen.height - 275);
     for (var i = 0; i < 3; i++) {
-        shapes.push(new Box(random(255), random(10, 100)));
+        shapes.push(new Box(random(255), 1));
     }
     for (var i = 0; i < 3; i++) {
-        shapes.push(new Circle(random(255), random(10, 30)));
+        shapes.push(new Circle(random(255), 1));
     }
 }
  
@@ -21,8 +23,10 @@ void draw() {
  
 void mousePressed() {
 	if (!shapesLocked) {
-    for (var i = 0; i < shapes.length; i++) {
-        if (shapes[i].shapeover == true) {
+        var shapesover = [];
+        for (var i = 0; i < shapes.length; i++) {
+            if (shapes[i].shapeover == true) {
+                shapesover.push(shapes[i]);
 	            shapes[i].locked = true;
 	            print("mouse is pressed")
 	        } else {
@@ -33,7 +37,9 @@ void mousePressed() {
 	        shapes[i].yoffset = mouseY - shapes[i].ypos
 	        print(shapes[i].locked);
 	    }
-	}
+	} else {
+        clicks.push(new ScreenPress(mouseX, mouseY, shapesover));
+    }
 	console.log("mousex: "+mouseX+" mouseY: "+mouseY);
     return false;
 }
@@ -63,12 +69,21 @@ void unlockShapes() {
 	console.log("shapes are now unlocked");
 }
 
+void logShapes() {
+    console.log(shapes);
+    console.log(clicks);
+}
+
+void updateDPI(screensize) {
+    DPI = sqrt(sq(screen.width) + sq(screen.height)) / screensize;
+}
+
 boolean createNewShape(type, size, color) {
 	console.log(color);
 	if (type != null && size > 0) {
 		switch(type) {
 			case 'circle':
-			var newcircle = new Circle(color, size);
+			var newcircle = new Circle(color, size / 2);
 			shapes.push(newcircle);
 			return true;
 			case 'square':
@@ -82,25 +97,41 @@ boolean createNewShape(type, size, color) {
 	}
 	return false;
 }
+
+void Level(shapes, name) {
+    this.shapes = shapes;
+    this.name = name;
+}
+
+void ScreenPress(x, y, clickedshapes) {
+    this.x = x;
+    this.y = y;
+    this.hour = hour();
+    this.minute = minute();
+    this.second = second();
+    this.clickedshapes = clickedshapes;
+}
  
 void Box(tempColor, tempSize) {
-    this.c = tempColor
+    this.c = tempColor;
     this.xpos = random(width);
     this.ypos = random(height);
-    console.log(tempSize);
     this.shapesize = tempSize;
     this.shapeover = false;
     this.locked = false;
     this.xoffset = 0;
     this.yoffset = 0;
     rectMode(RADIUS);
+    console.log(this.shapesize);
  
     this.show = function() {
+        var pixelsize = this.shapesize * DPI;
+        console.log(pixelsize);
  
-        if (mouseX > this.xpos - this.shapesize && mouseX < this.xpos + this.shapesize &&
-            mouseY > this.ypos - this.shapesize && mouseY < this.ypos + this.shapesize) {
+        if (mouseX > this.xpos - pixelsize && mouseX < this.xpos + pixelsize &&
+            mouseY > this.ypos - pixelsize && mouseY < this.ypos + pixelsize) {
             this.shapeover = true;
-            fill(this.c.r, this.c.g, this.c.b);
+            fill(this.c.r, this.c.g, this.c.b, 80);
  
             if (mousePressed && this.shapeover == true) {
                 stroke(200, 79, 100);
@@ -114,7 +145,7 @@ void Box(tempColor, tempSize) {
             noStroke();
             fill(this.c.r, this.c.g, this.c.b);
         }
-        rect(this.xpos, this.ypos, this.shapesize, this.shapesize, 7);
+        rect(this.xpos, this.ypos, pixelsize, pixelsize, 7);
     };
 }
 
@@ -130,7 +161,9 @@ void Circle(tempColor, tempSize) {
     ellipseMode(RADIUS);
  
     this.show = function() {
- 		if (dist(mouseX, mouseY, this.xpos, this.ypos) <= this.shapesize) {
+        var pixelsize = this.shapesize * DPI;
+
+ 		if (dist(mouseX, mouseY, this.xpos, this.ypos) <= pixelsize) {
             this.shapeover = true;
             fill(255);
             if (mousePressed && this.shapeover == true) {
@@ -144,6 +177,6 @@ void Circle(tempColor, tempSize) {
             noStroke();
             fill(this.c.r, this.c.g, this.c.b);
         }
-        ellipse(this.xpos, this.ypos, this.shapesize, this.shapesize);
+        ellipse(this.xpos, this.ypos, pixelsize, pixelsize);
     };
 }
