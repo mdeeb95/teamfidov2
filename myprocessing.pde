@@ -19,9 +19,9 @@ void setup() {
  
 void draw() {
     background(0, 0, 0);
-    console.log(levels);
+    console.log(shapes);
     for (var i = 0; i < shapes.length; i++) {
-        levels[currentLevelNum - 1].shapes[i].show();
+        shapes[i].show();
     }
 }
  
@@ -89,12 +89,15 @@ void saveCurrentLevel() {
 }
 
 void loadLevel(levelNumber) {
-    var newLevel = levels[levelNumber - 1];
-    shapes = newLevel.shapes;
+    var loaded = levels[levelNumber - 1];
+    console.log(loaded);
+    shapes = loaded.shapes;
+    console.log(shapes);
 }
 
 void makeNewLevel() {
     var newshapes = [];
+    shapes = newshapes;
     var newlevel = new Level(newshapes, currentLevelNum + 1);
     currentLevelNum++;
     console.log(newlevel);

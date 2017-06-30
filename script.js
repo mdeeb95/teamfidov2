@@ -42,10 +42,11 @@ function makeNewLevel() {
     processingInstance = Processing.getInstanceById('mainCanvas');
     var newlevelnum = processingInstance.makeNewLevel();
     console.log(newlevelnum);
-    $('#mySelect').append($('<option>', {
+    $('#leveldropdown').append($('<option>', {
         value: newlevelnum,
         text: newlevelnum
     }));
+    $('#leveldropdown').val(newlevelnum);
 }
 
 function loadLevel() {
