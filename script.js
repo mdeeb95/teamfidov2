@@ -18,8 +18,10 @@ function logShapes() {
 function createShape() {
 	processingInstance = Processing.getInstanceById('mainCanvas');
 	var color = $('#cp11').colorpicker('getValue');
+    var xCoord = $("#Xcoordinate").val();
+    var yCoord = $("#Ycoordinate").val();
 	var rgb = hexToRgb(color);
-	var created = processingInstance.createNewShape($("#newshapetype").val(), $("#newshapesize").val(), rgb);
+	var created = processingInstance.createNewShape($("#newshapetype").val(), $("#newshapesize").val(), rgb, xCoord, yCoord);
 	if (created) {
 		$('#myModal').modal('toggle');
 	} else {

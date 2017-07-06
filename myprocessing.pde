@@ -19,7 +19,6 @@ void setup() {
  
 void draw() {
     background(0, 0, 0);
-    console.log(shapes);
     for (var i = 0; i < shapes.length; i++) {
         shapes[i].show();
     }
@@ -105,7 +104,8 @@ void makeNewLevel() {
     return currentLevelNum;
 }
 
-boolean createNewShape(type, size, color) {
+boolean createNewShape(type, size, color, xCoord, yCoord) {
+    console.log("X coordinate: " + xCoord + " Y coordinate:" + yCoord);
 	if (type != null && size > 0) {
 		switch(type) {
 			case 'circle':
@@ -113,7 +113,7 @@ boolean createNewShape(type, size, color) {
 			shapes.push(newcircle);
 			return true;
 			case 'square':
-			var newbox = new Box(color, size / 2);
+			var newbox = new Box(color, size / 2, xCoord, yCoord);
 			shapes.push(newbox);
 			return true;
 			case 'triangle':
@@ -139,10 +139,10 @@ void ScreenPress(x, y, clickedshapes) {
     this.clickedshapes = clickedshapes;
 }
  
-void Box(tempColor, tempSize) {
+void Box(tempColor, tempSize, xCoord, yCoord) {
     this.c = tempColor;
-    this.xpos = random(width);
-    this.ypos = random(height);
+    this.xpos = xCoord;
+    this.ypos = yCoord;
     this.shapesize = tempSize;
     this.shapeover = false;
     this.locked = false;
