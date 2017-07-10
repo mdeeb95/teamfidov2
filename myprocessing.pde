@@ -109,7 +109,7 @@ boolean createNewShape(type, size, color, xCoord, yCoord) {
 	if (type != null && size > 0) {
 		switch(type) {
 			case 'circle':
-			var newcircle = new Circle(color, size / 2);
+			var newcircle = new Circle(color, size / 2, xCoord, yCoord);
 			shapes.push(newcircle);
 			return true;
 			case 'square':
@@ -117,6 +117,9 @@ boolean createNewShape(type, size, color, xCoord, yCoord) {
 			shapes.push(newbox);
 			return true;
 			case 'triangle':
+            var newTriangle = new Triangle(color, size, xCoord, yCoord);
+            shapes.push(newTriangle);
+            return true;
 			//create tri, no tri func yet
 			break;
 		}
@@ -174,10 +177,10 @@ void Box(tempColor, tempSize, xCoord, yCoord) {
     };
 }
 
-void Circle(tempColor, tempSize) {
+void Circle(tempColor, tempSize, xCoord, yCoord) {
     this.c = tempColor
-    this.xpos = random(width);
-    this.ypos = random(height);
+    this.xpos = xCoord;
+    this.ypos = yCoord;
     this.shapesize = tempSize;
     this.shapeover = false;
     this.locked = false;
@@ -203,5 +206,58 @@ void Circle(tempColor, tempSize) {
             fill(this.c.r, this.c.g, this.c.b);
         }
         ellipse(this.xpos, this.ypos, pixelsize, pixelsize);
+    };
+}
+
+void Triangle(tempColor, tempSize, xCoord, yCoord) {
+    this.c = tempColor;
+    this.shapesize = tempSize;
+    //pixel size of one side of equalateral triangle
+    var pixelsize = this.shapesize * DPI;
+    console.log("pixelsize: " + pixelsize);
+    var height = (sqrt(3)/2)*pixelsize;
+    console.log("height: " + height);
+    var centerTriangle = height/3;
+    console.log("centerTriangle: " + centerTriangle);
+    this.xpos1 = (parseFloat(xCoord) - (pixelsize/2));
+    this.ypos1 = (parseFloat(yCoord) + centerTriangle);
+    console.log("xpos1: " + this.xpos1 + " ypos1: " + this.ypos1);
+    this.xpos2 = xCoord;
+    this.ypos2 = (parseFloat(yCoord) - centerTriangle);
+    console.log("xpos2: " + this.xpos2 + " ypos2: " + this.ypos2);
+    this.xpos3 = (parseFloat(xCoord) + (pixelsize/2));
+    this.ypos3 = this.ypos1;
+    console.log("xpos3: " + this.xpos3 + " ypos3: " + this.ypos3);
+    this.centerpointX = this.xpos1 + (pixelsize/2);
+    this.centerpointY = this.ypos1 - (centerTriangle);
+    console.log("centerPointx: " + this.centerpointX + " CenterPointY: " + this.centerpointY);
+    this.shapeover = false;
+    this.locked = false;
+    this.xoffset = 0;
+    this.yoffset = 0;
+    //rectMode(RADIUS);
+ 
+    this.show = function() {
+        //var pixelsize = this.shapesize * DPI;
+ 
+        //if (mouseX > this.xpos1 && mouseX < this.xpos2 &&
+            //mouseY > this.ypos2 && mouseY < this.ypos1) 
+        if (dist(mouseX, mouseY, this.centerpointX, this.centerpointY) <= centerTriangle) {
+            this.shapeover = true;
+            fill(this.c.r, this.c.g, this.c.b, 80);
+ 
+            if (mousePressed && this.shapeover == true) {
+                stroke(200, 79, 100);
+                strokeWeight(5);
+            } else {
+                noStroke();
+            }
+ 
+        } else {
+            this.shapeover = false;
+            noStroke();
+            fill(this.c.r, this.c.g, this.c.b);
+        }
+        triangle(this.xpos1, this.ypos1, this.xpos2, this.ypos2, this.xpos3, this.ypos3);
     };
 }
