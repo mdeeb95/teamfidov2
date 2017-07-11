@@ -210,39 +210,23 @@ void Circle(tempColor, tempSize, xCoord, yCoord) {
 }
 
 void Triangle(tempColor, tempSize, xCoord, yCoord) {
-    this.c = tempColor;
+    this.c = tempColor
+    this.xpos = parseFloat(xCoord);
+    this.ypos = parseFloat(yCoord);
     this.shapesize = tempSize;
-    //pixel size of one side of equalateral triangle
-    var pixelsize = this.shapesize * DPI;
-    console.log("pixelsize: " + pixelsize);
-    var height = (sqrt(3)/2)*pixelsize;
-    console.log("height: " + height);
-    var centerTriangle = height/3;
-    console.log("centerTriangle: " + centerTriangle);
-    this.xpos1 = (parseFloat(xCoord) - (pixelsize/2));
-    this.ypos1 = (parseFloat(yCoord) + centerTriangle);
-    console.log("xpos1: " + this.xpos1 + " ypos1: " + this.ypos1);
-    this.xpos2 = xCoord;
-    this.ypos2 = (parseFloat(yCoord) - centerTriangle);
-    console.log("xpos2: " + this.xpos2 + " ypos2: " + this.ypos2);
-    this.xpos3 = (parseFloat(xCoord) + (pixelsize/2));
-    this.ypos3 = this.ypos1;
-    console.log("xpos3: " + this.xpos3 + " ypos3: " + this.ypos3);
-    this.centerpointX = this.xpos1 + (pixelsize/2);
-    this.centerpointY = this.ypos1 - (centerTriangle);
-    console.log("centerPointx: " + this.centerpointX + " CenterPointY: " + this.centerpointY);
     this.shapeover = false;
     this.locked = false;
     this.xoffset = 0;
     this.yoffset = 0;
-    //rectMode(RADIUS);
  
     this.show = function() {
-        //var pixelsize = this.shapesize * DPI;
+        var pixelsize = this.shapesize * DPI;
+        var height = (sqrt(3)/2)*pixelsize;
+        //console.log("height: " + height);
+        var centerTriangle = height/3;
+        //console.log("centerTriangle: " + centerTriangle);
  
-        //if (mouseX > this.xpos1 && mouseX < this.xpos2 &&
-            //mouseY > this.ypos2 && mouseY < this.ypos1) 
-        if (dist(mouseX, mouseY, this.centerpointX, this.centerpointY) <= centerTriangle) {
+        if (dist(mouseX, mouseY, this.xpos, this.ypos) <= centerTriangle) {
             this.shapeover = true;
             fill(this.c.r, this.c.g, this.c.b, 80);
  
@@ -258,6 +242,6 @@ void Triangle(tempColor, tempSize, xCoord, yCoord) {
             noStroke();
             fill(this.c.r, this.c.g, this.c.b);
         }
-        triangle(this.xpos1, this.ypos1, this.xpos2, this.ypos2, this.xpos3, this.ypos3);
+        triangle((this.xpos - (pixelsize/2)), (this.ypos + centerTriangle), this.xpos, (this.ypos - (2*centerTriangle)), (this.xpos + (pixelsize/2)), this.ypos + centerTriangle);
     };
 }
