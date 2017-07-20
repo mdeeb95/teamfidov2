@@ -29,6 +29,20 @@ function createShape() {
 	}
 }
 
+function createGrid() {
+    processingInstance = Processing.getInstanceById('mainCanvas');
+    var color = $('#cp11').colorpicker('getValue');
+    var numRows = $("#numRows").val();
+    var numColumns = $("#numColumns").val();
+    var rgb = hexToRgb(color);
+    var created = processingInstance.createNewGrid(rgb, numRows, numColumns);
+    if (created) {
+        $('#secondModal').modal('toggle');
+    } else {
+        console.log('didnt make the grid for some reason, probably alert user');
+    }
+}
+
 function play(){
     var audioElement = document.createElement('audio');
     audioElement.setAttribute('src', 'tap-crisp.mp3');

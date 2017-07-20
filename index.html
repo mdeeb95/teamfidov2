@@ -37,6 +37,10 @@
 			<button onClick="lockShapes()" type="button" class="btn btn-success btn-lg">Begin Recording</button>
 			<button onClick="unlockShapes()" type="button" class="btn btn-danger btn-lg">End Recording</button>
 			<button type="button" class="btn btn-info btn-lg" data-toggle="modal" onClick="addShapeModal()" data-target="#myModal">Add Shape</button>
+
+			<!--New buttons to show / hide grid -->
+			<button type="button" class="btn btn-info btn-lg" data-toggle="modal" onClick="addShapeModal()" data-target="#secondModal">Grid On</button>
+
 			<hr/>
 			<label for="screeninches">Screen Size</label>
 			<div class="input-group col-md-3">
@@ -106,6 +110,45 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-primary" onClick="createShape()">Create</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<!-- Trigger the 2nd modal with a button -->
+			<!-- secondModal -->
+			<div id="secondModal" tabindex="-1" class="modal fade" role="dialog" aria-hidden="true">
+				<div class="modal-dialog">
+					<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">Add Grid</h4>
+						</div>
+						<div class="modal-body">
+							<h4>Grid Rows</h4>
+							<div class="input-group">
+								<input id="numRows" type="text" class="form-control">
+								<span class="input-group-btn">
+									<button class="btn btn-secondary" type="button">Integer</button>
+								</span>
+							</div>
+							<h4>Grid Columns</h4>
+							<div class="input-group">
+								<input id="numColumns" type="text" class="form-control">
+								<span class="input-group-btn">
+									<button class="btn btn-secondary" type="button">Integer</button>
+								</span>
+							</div>
+							<h4>Grid Line Color</h4>
+							<div id="cp11" class="input-group colorpicker-component">
+								<input type="text" value="#00AABB" class="form-control" />
+								<span class="input-group-addon"><i></i></span>
+							</div>	
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" onClick="createGrid()">Create</button>
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 						</div>
 					</div>

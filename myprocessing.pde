@@ -1,4 +1,5 @@
 var shapes = [];
+var lines = [];
 var currentLevelNum = 1;
 var levels = [];
 var clicks = [];
@@ -120,12 +121,23 @@ boolean createNewShape(type, size, color, xCoord, yCoord) {
             var newTriangle = new Triangle(color, size, xCoord, yCoord);
             shapes.push(newTriangle);
             return true;
-			//create tri, no tri func yet
 			break;
 		}
         saveCurrentLevel();
 	}
 	return false;
+}
+
+boolean createNewGrid(color, numRows, numColumns) {
+    console.log("num rows: " + numRows + " num columns:" + numColumns);
+    if (numRows > 0 && numColumns > 0) {
+        //var newLine = new Line(color, numRows, numColumns);
+        Line(color, numRows, numColumns);
+        //lines.push(newLine);
+        return true;
+        saveCurrentLevel();
+    }
+    return false;
 }
 
 void Level(levelshapes, number) {
@@ -207,6 +219,36 @@ void Circle(tempColor, tempSize, xCoord, yCoord) {
         }
         ellipse(this.xpos, this.ypos, pixelsize, pixelsize);
     };
+}
+
+void Line(tempColor, numRows, numColumns) {
+    //this.c = tempColor
+    var numrows = numRows;
+    var numcolumns = numColumns;
+    var screenWidth = screen.width;
+    var screenHeight = screen.height;
+    float rowOffset = screenHeight/numrows;
+    float colOffset = screenWidth/numcolumns;
+    console.log("screen width " + screen.width);
+    console.log("screen height " + screen.height);
+    console.log("row offset " + rowOffset);
+    console.log("column offset " + colOffset);
+ 
+    //this.show = function() {
+    stroke(255);
+        for (int i = 0; i < numrows - 1; i = i+1) {
+        console.log("row " + i + " Y coordinate: " + rowOffset*(i+1));
+            //stroke(tempColor.r, tempColor.g, tempColor.b);
+            line(0, 0+(rowOffset*(i+1)), screen.width, 0+(rowOffset*(i+1)));  
+        }
+        for (int i = 0; i < numcolumns - 1; i = i+1) {
+        console.log("column " + i + " X coordinate: " + colOffset*(i+1));
+            //stroke(255,255,255);
+            line(0+(colOffset*(i+1)), 0, 0+(colOffset*(i+1)), screen.height); 
+            //stroke(tempColor.r, tempColor.g, tempColor.b); 
+            //stroke(255,255,255);
+        }
+    //};
 }
 
 void Triangle(tempColor, tempSize, xCoord, yCoord) {
