@@ -17,7 +17,7 @@ var numGridCols = 0;
 var gridColor = "";
  
 void setup() {
-    size(screen.width - 50, screen.height - 275);
+    size(screen.width, screen.height);
     for (var i = 0; i < 3; i++) {
         shapes.push(new Box(random(255), 1));
     }
@@ -204,6 +204,10 @@ void ScreenPress(x, y, clickedshapes) {
     this.minute = minute();
     this.second = second();
     this.clickedshapes = clickedshapes;
+}
+
+void fullscreen() {
+    size(screen.width, screen.height);
 }
  
 void Box(tempColor, tempSize, xCoord, yCoord) {

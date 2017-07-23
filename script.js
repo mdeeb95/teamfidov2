@@ -57,7 +57,7 @@ function createShape() {
 
 function createGrid() {
     processingInstance = Processing.getInstanceById('mainCanvas');
-    var color = $('#cp11').colorpicker('getValue');
+    var color = $('#gridcolorpick').colorpicker('getValue');
     var numRows = $("#numRows").val();
     var numColumns = $("#numColumns").val();
     var rgb = hexToRgb(color);
@@ -135,4 +135,25 @@ function addShapeModal() {
             },
         }
     });
+}
+
+function fullscreen() {
+    processingInstance = Processing.getInstanceById('mainCanvas');
+    processingInstance.fullscreen();
+    var element = $('#mainCanvas');
+    //var requestMethod = element.requestFullScreen;
+    document.body.style.overflow = 'hidden';
+    $('html, body').animate({
+        scrollTop: $("#mainCanvas").offset().top
+    },2000);
+    $(document).keyup(function(e) {     
+        if(e.keyCode== 27) {
+            deactivateFullscreen();
+        } 
+    });
+    $('#fullscreenModal').modal('toggle');
+}
+
+function deactivateFullscreen() {
+    document.body.style.overflow = 'visible';
 }
