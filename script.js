@@ -137,6 +137,21 @@ function addShapeModal() {
     });
 }
 
+function createGridModal() {
+    $('#gridcolorpick').colorpicker({
+        customClass: 'colorpicker-2x',
+        sliders: {
+            saturation: {
+                maxLeft: 200,
+                maxTop: 200
+            },
+            hue: {
+                maxTop: 200
+            },
+        }
+    });
+}
+
 function fullscreen() {
     processingInstance = Processing.getInstanceById('mainCanvas');
     processingInstance.fullscreen();
