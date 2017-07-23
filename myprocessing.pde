@@ -5,6 +5,16 @@ var levels = [];
 var clicks = [];
 var DPI = 110;
 var shapesLocked = false;
+
+var settingSequence = false;
+var targetSequenceLength = 3;
+var targetSequence = [];
+var expectedShapeIndex = -1;
+
+var gridOn = false;
+var numGridRows = 0;
+var numGridCols = 0;
+var gridColor = "";
  
 void setup() {
     size(screen.width - 50, screen.height - 275);
@@ -23,28 +33,50 @@ void draw() {
     for (var i = 0; i < shapes.length; i++) {
         shapes[i].show();
     }
+    if (gridOn) {
+        Line(gridColor, numGridRows, numGridCols);
+    }
 }
  
 void mousePressed() {
-	if (!shapesLocked) {
+    if (!shapesLocked) {
         var shapesover = [];
         for (var i = 0; i < shapes.length; i++) {
             if (shapes[i].shapeover == true) {
                 shapesover.push(shapes[i]);
-	            shapes[i].locked = true;
-	            print("mouse is pressed")
-	        } else {
-	            shapes[i].locked = false;
-	            print("mouse isn't pressed")
-	        }
-	        shapes[i].xoffset = mouseX - shapes[i].xpos;
-	        shapes[i].yoffset = mouseY - shapes[i].ypos
-	        print(shapes[i].locked);
-	    }
-	} else {
+                shapes[i].locked = true;
+                print("mouse is pressed");
+                if (settingSequence && targetSequence.length < targetSequenceLength) {
+                    if (targetSequence.indexOf(shapes[i]) === -1) {
+                        targetSequence.push(shapes[i]);
+                    }
+                    console.log(targetSequence);
+                }
+            } else {
+                shapes[i].locked = false;
+                print("mouse isn't pressed")
+            }
+            shapes[i].xoffset = mouseX - shapes[i].xpos;
+            shapes[i].yoffset = mouseY - shapes[i].ypos
+            print(shapes[i].locked);
+        }
+    } else {
         clicks.push(new ScreenPress(mouseX, mouseY, shapesover));
+        for (var i = 0; i < shapes.length; i++) {
+            if (shapes[i].shapeover == true) {
+                var expectedShape = targetSequence[expectedShapeIndex];
+                if (expectedShape === shapes[i]) {
+                    console.log("got the right one!!!");
+                    if (expectedShapeIndex === (targetSequence.length - 1)) {
+                        unlockShapes();
+                    } else {
+                        expectedShapeIndex++;
+                    }
+                }
+            }
+        }
     }
-	console.log("mousex: "+mouseX+" mouseY: "+mouseY);
+    console.log("mousex: "+mouseX+" mouseY: "+mouseY);
     return false;
 }
  
@@ -66,11 +98,19 @@ void mouseReleased() {
 void lockShapes() {
 	shapesLocked = true;
 	console.log("shapes are now locked");
+
+        gridOn = false;
+
+        if (targetSequence.length > 0) {
+            expectedShapeIndex = 0;
+        }
 }
 
 void unlockShapes() {
 	shapesLocked = false;
 	console.log("shapes are now unlocked");
+
+        gridOn = true;
 }
 
 void logShapes() {
@@ -80,6 +120,11 @@ void logShapes() {
 
 void updateDPI(screensize) {
     DPI = sqrt(sq(screen.width) + sq(screen.height)) / screensize;
+}
+
+void setTargetSequenceLength(length) {
+    targetSequenceLength = length;
+    console.log(targetSequenceLength);
 }
 
 void saveCurrentLevel() {
@@ -103,6 +148,16 @@ void makeNewLevel() {
     console.log(newlevel);
     levels.push(newlevel);
     return currentLevelNum;
+}
+
+void setTargetSequence() {
+    settingSequence = true;
+    console.log(settingSequence);
+}
+
+void endSetTargetSequence() {
+    settingSequence = false;
+    console.log(settingSequence);
 }
 
 boolean createNewShape(type, size, color, xCoord, yCoord) {
@@ -130,14 +185,11 @@ boolean createNewShape(type, size, color, xCoord, yCoord) {
 
 boolean createNewGrid(color, numRows, numColumns) {
     console.log("num rows: " + numRows + " num columns:" + numColumns);
-    if (numRows > 0 && numColumns > 0) {
-        //var newLine = new Line(color, numRows, numColumns);
-        Line(color, numRows, numColumns);
-        //lines.push(newLine);
-        return true;
-        saveCurrentLevel();
-    }
-    return false;
+    gridOn = true;
+    numGridRows = numRows;
+    numGridCols = numColumns;
+    gridColor = color;
+    return true;
 }
 
 void Level(levelshapes, number) {

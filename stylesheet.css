@@ -17,3 +17,7 @@
 .colorpicker-2x .colorpicker-color div {
     height: 30px;
 }
+
+#sequence-set-end {
+    display: none;
+}
