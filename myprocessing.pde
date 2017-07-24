@@ -18,12 +18,12 @@ var gridColor = "";
  
 void setup() {
     size(screen.width, screen.height);
-    for (var i = 0; i < 3; i++) {
+    /*for (var i = 0; i < 3; i++) {
         shapes.push(new Box(random(255), 1));
     }
     for (var i = 0; i < 3; i++) {
         shapes.push(new Circle(random(255), 1));
-    }
+    }*/
     var startinglevel = new Level(shapes, currentLevelNum);
     levels.push(startinglevel);
 }
