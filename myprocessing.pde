@@ -291,7 +291,8 @@ void Line(tempColor, numRows, numColumns) {
     console.log("column offset " + colOffset);
  
     //this.show = function() {
-    stroke(255);
+    //stroke(255);
+    stroke(gridColor.r, gridColor.g, gridColor.b);
         for (int i = 0; i < numrows - 1; i = i+1) {
         console.log("row " + i + " Y coordinate: " + rowOffset*(i+1));
             //stroke(tempColor.r, tempColor.g, tempColor.b);
