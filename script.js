@@ -1,5 +1,10 @@
 var processingInstance;
 
+function downloadCSV(args) {
+    processingInstance = Processing.getInstanceById('mainCanvas');
+    processingInstance.downloadCSV(args);
+}
+
 function lockShapes() {
 	processingInstance = Processing.getInstanceById('mainCanvas');
 	processingInstance.lockShapes();
