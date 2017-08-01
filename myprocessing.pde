@@ -197,11 +197,14 @@ boolean createNewGrid(color, numRows, numColumns, populate) {
     numGridRows = numRows;
     numGridCols = numColumns;
     gridColor = color;
-    for (i = 0; i < numRows; i++) {
-        for (j = 0; j < numColumns; j++) {
-            var randomColor = "#000000".replace(/0/g,function(){return (~~(Math.random()*16)).toString(16);});
-            randomColor = hexToRgb(randomColor);
-            createNewShape('circle', 2, randomColor, (screen.width / numColumns * j + screen.width / numColumns / 2), (screen.height / numRows * i + screen.height / numRows / 2));
+    if (populate) {
+        shapes = [];
+        for (i = 0; i < numRows; i++) {
+            for (j = 0; j < numColumns; j++) {
+                var randomColor = "#000000".replace(/0/g,function(){return (~~(Math.random()*16)).toString(16);});
+                randomColor = hexToRgb(randomColor);
+                createNewShape('circle', 2, randomColor, (screen.width / numColumns * j + screen.width / numColumns / 2), (screen.height / numRows * i + screen.height / numRows / 2));
+            }
         }
     }
     return true;
