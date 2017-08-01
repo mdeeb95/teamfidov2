@@ -182,6 +182,79 @@ void makeNewLevel() {
     return currentLevelNum;
 }
 
+void makeNewTappingTaskLevel(distance, diameter, angle) {
+    var yCoordCenter = screen.height / 2;
+    var xCoordCenter = screen.width / 2;
+
+    var xCoord1;
+    var xCoord2;
+    var yCoord1;
+    var yCoord2;
+
+    var distancePixels = ((distance + diameter) / 2) * DPI;
+    if (angle == 0) {
+        xCoord1 = xCoordCenter - distancePixels;
+        xCoord2 = xCoordCenter + distancePixels;
+        yCoord1 = yCoordCenter;
+        yCoord2 = yCoordCenter;
+    } else {
+        var angleRad = angle * (Math.PI / 180);
+        var yDiff = Math.sin(angleRad) * distancePixels;
+        var xDiff = Math.sqrt(Math.pow(distancePixels, 2) - Math.pow(angleRad, 2));
+
+        xCoord1 = xCoordCenter - xDiff;
+        xCoord2 = xCoordCenter + xDiff;
+        yCoord1 = yCoordCenter - yDiff;
+        yCoord2 = yCoordCenter + yDiff;
+    }
+
+    var shape1 = new Circle(hexToRgb("#2940f2"), diameter / 2, xCoord1, yCoord1);
+    var shape2 = new Circle(hexToRgb("#f1e428"), diameter / 2, xCoord2, yCoord2);
+
+    var newShapes = [];
+    newShapes.push(shape1, shape2);
+    shapes = newShapes;
+
+    var newLevel = new Level(newShapes, currentLevelNum + 1);
+    currentLevelNum++;
+    levels.push(newLevel);
+    return currentLevelNum;
+}
+
+void createTappingTask(distance_initial, distance_delta, distance_iterations, diameter_initial, diameter_delta, diameter_iterations, angle_initial, angle_delta, angle_iterations) {
+    levels = [];
+    currentLevelNum = 0;
+
+    if (distance_iterations == 0) {
+        distance_iterations = 1;
+    }
+    if (diameter_iterations == 0) {
+        diameter_iterations = 1;
+    }
+    if (angle_iterations == 0) {
+        angle_iterations = 1;
+    }
+
+    var cur_dist;
+    var cur_diam;
+    var cur_angle;
+
+    var newLevels = [];
+
+    for (var i = 0; i < distance_iterations; i++) {
+       cur_dist = distance_initial + (distance_delta * i);
+       for (var j = 0; j < diameter_iterations; j++) {
+           cur_diam = diameter_initial + (diameter_delta * j);
+           for (var k = 0; k < angle_iterations; k++) {
+               cur_angle = angle_initial + (angle_delta * k);
+
+               newLevels.push(makeNewTappingTaskLevel(cur_dist, cur_diam, cur_angle));
+           }
+       }
+    }
+    return newLevels;
+}
+
 void setTargetSequence() {
     settingSequence = true;
     console.log(settingSequence);
@@ -252,6 +325,16 @@ void ScreenPress(x, y, clickedshapes) {
 
 void fullscreen() {
     size(screen.width, screen.height);
+}
+
+void reset() {
+    levels = [];
+    shapes = [];
+    lines = [];
+    currentLevelNum = 1;
+
+    targetSequence = [];
+    expectedShapeIndex = -1;
 }
  
 void Box(tempColor, tempSize, xCoord, yCoord) {
