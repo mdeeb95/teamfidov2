@@ -21,7 +21,7 @@ var successfulHitSound = false;
 void setup() {
     //initializing basic processing canvas, and create an empty Level object to push to the Levels array
     size(screen.width, screen.height);
-    var startinglevel = new Level(shapes, currentLevelNum);
+    var startinglevel = new Level(shapes, currentLevelNum, targetSequence);
     levels.push(startinglevel);
 }
  
@@ -61,7 +61,7 @@ void mousePressed() {
         }
     } else {
         clicks.push(new ScreenPress(mouseX, mouseY, shapesover));
-        for (var i = 0; i < shapes.length; i++) {
+        for (var i = 0; i < shapes.length; i++) {           
             if (shapes[i].shapeover == true) {
                 var expectedShape = targetSequence[expectedShapeIndex];
                 if (expectedShape === shapes[i]) {
@@ -72,7 +72,13 @@ void mousePressed() {
                     audioElement.play();
                     successfulHitSound = true;
                     if (expectedShapeIndex === (targetSequence.length - 1)) {
-                        unlockShapes();
+                        //if (currentLevelValue === levels.length) {
+                            console.log("Done with the session.");
+                            unlockShapes();
+                        //} else {
+                        //    consol.log("Let's go to next level.")
+                        //    loadLevel(currentLevelValue + 1);
+                        //}
                     } else {
                         expectedShapeIndex++;
                     }
@@ -146,6 +152,7 @@ void setTargetSequenceLength(length) {
 void saveCurrentLevel() {
     var currentLevel = levels[currentLevelNum];
     currentLevel.shapes = shapes;
+    currentLevel.targetSequence = targetSequence;
     console.log(levels[currentLevelNum]);
 }
 
@@ -154,13 +161,21 @@ void loadLevel(levelNumber) {
     var loaded = levels[levelNumber - 1];
     console.log(loaded);
     shapes = loaded.shapes;
+    console.log("Shapes: ")
     console.log(shapes);
+    targetSequence = loaded.targetSequence;
+    console.log("Sequences: ")
+    console.log(targetSequence);
 }
 
 void makeNewLevel() {
     var newshapes = [];
     shapes = newshapes;
-    var newlevel = new Level(newshapes, currentLevelNum + 1);
+    settingSequence = false;
+    targetSequenceLength = 3;
+    targetSequence = [];
+    expectedShapeIndex = -1;
+    var newlevel = new Level(newshapes, currentLevelNum + 1, targetSequence);
     currentLevelNum++;
     console.log(newlevel);
     levels.push(newlevel);
@@ -220,9 +235,10 @@ boolean createNewGrid(color, numRows, numColumns, populate) {
 }
 
 //mostly objects located below, shouldn't be doing a lot other than storing variables and helping with rendering functions
-void Level(levelshapes, number) {
+void Level(levelshapes, number, sequence) {
     this.shapes = levelshapes;
     this.number = number;
+    this.targetSequence = sequence;
 }
 
 void ScreenPress(x, y, clickedshapes) {
@@ -367,6 +383,10 @@ void Triangle(tempColor, tempSize, xCoord, yCoord) {
 
 void getClicks() {
     return clicks;
+}
+
+void getLevels() {
+    return 
 }
 
 void exportData(args) {
