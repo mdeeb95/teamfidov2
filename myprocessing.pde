@@ -15,6 +15,8 @@ var gridOn = false;
 var numGridRows = 0;
 var numGridCols = 0;
 var gridColor = "";
+
+var successfulHitSound = false;
  
 void setup() {
     //initializing basic processing canvas, and create an empty Level object to push to the Levels array
@@ -68,6 +70,7 @@ void mousePressed() {
                     var audioElement = document.createElement('audio');
                     audioElement.setAttribute('src', 'tap-crisp.mp3');
                     audioElement.play();
+                    successfulHitSound = true;
                     if (expectedShapeIndex === (targetSequence.length - 1)) {
                         unlockShapes();
                     } else {
@@ -94,6 +97,12 @@ void mouseDragged() {
 void mouseReleased() {
     for (var i = 0; i < shapes.length; i++) {
         shapes[i].locked = false;
+    }
+    if (successfulHitSound) {
+        var audioElement = document.createElement('audio');
+        audioElement.setAttribute('src', 'tap-crisp.mp3');
+        audioElement.play();
+        successfulHitSound = false;
     }
 }
 
@@ -203,7 +212,7 @@ boolean createNewGrid(color, numRows, numColumns, populate) {
             for (j = 0; j < numColumns; j++) {
                 var randomColor = "#000000".replace(/0/g,function(){return (~~(Math.random()*16)).toString(16);});
                 randomColor = hexToRgb(randomColor);
-                createNewShape('circle', 2, randomColor, (screen.width / numColumns * j + screen.width / numColumns / 2), (screen.height / numRows * i + screen.height / numRows / 2));
+                createNewShape('circle', screen.width/numColumns/DPI/3, randomColor, (screen.width / numColumns * j + screen.width / numColumns / 2), (screen.height / numRows * i + screen.height / numRows / 2));
             }
         }
     }
