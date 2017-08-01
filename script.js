@@ -85,7 +85,6 @@ function saveCurrentLevel() {
 function makeNewLevel() {
     processingInstance = Processing.getInstanceById('mainCanvas');
     var newlevelnum = processingInstance.makeNewLevel();
-    console.log(newlevelnum);
     $('#leveldropdown').append($('<option>', {
         value: newlevelnum,
         text: newlevelnum
@@ -96,7 +95,6 @@ function makeNewLevel() {
 function loadLevel() {
     processingInstance = Processing.getInstanceById('mainCanvas');
     processingInstance.loadLevel($('#leveldropdown').val());
-    console.log($('#leveldropdown').val());
 }
 
 function updateDPI() {
@@ -110,6 +108,7 @@ function setTargetSequenceLength() {
 }
 
 function hexToRgb(hex) {
+    //Processing uses RGB codes even though the rest of the sane world uses hex, so we need this conversion helper
     // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
     var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
     hex = hex.replace(shorthandRegex, function(m, r, g, b) {
@@ -125,6 +124,7 @@ function hexToRgb(hex) {
 }
 
 function addShapeModal() {
+    //boostrap modal creator, with custom css for the color picker to get rid of transparency that I didn't want to use
 	$('#cp11').colorpicker({
 		customClass: 'colorpicker-2x',
         sliders: {
@@ -140,6 +140,7 @@ function addShapeModal() {
 }
 
 function createGridModal() {
+    //boostrap modal creator, with custom css for the color picker to get rid of transparency that I didn't want to use
     $('#gridcolorpick').colorpicker({
         customClass: 'colorpicker-2x',
         sliders: {
@@ -155,6 +156,7 @@ function createGridModal() {
 }
 
 function fullscreen() {
+    //essentially a bunch of CSS trickery to make the screen appear fullscreen by auto scrolling to a full canvas
     processingInstance = Processing.getInstanceById('mainCanvas');
     processingInstance.fullscreen();
     var element = $('#mainCanvas');
