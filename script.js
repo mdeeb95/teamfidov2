@@ -55,8 +55,6 @@ function createShape() {
 	var created = processingInstance.createNewShape($("#newshapetype").val(), $("#newshapesize").val(), rgb, xCoord, yCoord);
 	if (created) {
 		$('#myModal').modal('toggle');
-	} else {
-		console.log('didnt make the shape for some reason, probably alert user');
 	}
 }
 
@@ -69,8 +67,6 @@ function createGrid() {
     var created = processingInstance.createNewGrid(rgb, numRows, numColumns);
     if (created) {
         $('#secondModal').modal('toggle');
-    } else {
-        console.log('didnt make the grid for some reason, probably alert user');
     }
 }
 

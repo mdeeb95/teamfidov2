@@ -17,18 +17,14 @@ var numGridCols = 0;
 var gridColor = "";
  
 void setup() {
+    //initializing basic processing canvas, and create an empty Level object to push to the Levels array
     size(screen.width, screen.height);
-    /*for (var i = 0; i < 3; i++) {
-        shapes.push(new Box(random(255), 1));
-    }
-    for (var i = 0; i < 3; i++) {
-        shapes.push(new Circle(random(255), 1));
-    }*/
     var startinglevel = new Level(shapes, currentLevelNum);
     levels.push(startinglevel);
 }
  
 void draw() {
+    //draw is called constantly and renders what is shown on the canvas
     background(0, 0, 0);
     for (var i = 0; i < shapes.length; i++) {
         shapes[i].show();
@@ -39,6 +35,7 @@ void draw() {
 }
  
 void mousePressed() {
+    //detection for mouseover logic and mouse pressing logic, allows user to drag around a circle
     if (!shapesLocked) {
         var shapesover = [];
         for (var i = 0; i < shapes.length; i++) {
@@ -67,6 +64,10 @@ void mousePressed() {
                 var expectedShape = targetSequence[expectedShapeIndex];
                 if (expectedShape === shapes[i]) {
                     console.log("got the right one!!!");
+                    //Play a sound when the correct shape is detected
+                    var audioElement = document.createElement('audio');
+                    audioElement.setAttribute('src', 'tap-crisp.mp3');
+                    audioElement.play();
                     if (expectedShapeIndex === (targetSequence.length - 1)) {
                         unlockShapes();
                     } else {
@@ -81,6 +82,7 @@ void mousePressed() {
 }
  
 void mouseDragged() {
+    //doing logic for movements between screen draws, this way processing knows how far to move the circle as the user drags
     for (var i = 0; i < shapes.length; i++) {
         if (shapes[i].locked) {
             shapes[i].xpos = mouseX - shapes[i].xoffset;
@@ -95,24 +97,28 @@ void mouseReleased() {
     }
 }
 
+
+//helper functions to prevent the shapes from being moved/allow movement
 void lockShapes() {
-	shapesLocked = true;
-	console.log("shapes are now locked");
-
+    if (!shapesLocked) {
+    	shapesLocked = true;
         gridOn = false;
-
         if (targetSequence.length > 0) {
             expectedShapeIndex = 0;
         }
+        console.log("shapes are now locked");
+    }
 }
 
 void unlockShapes() {
-	shapesLocked = false;
-	console.log("shapes are now unlocked");
-
+    if (shapesLocked) {
+        shapesLocked = false;
+        console.log("shapes are now unlocked");
         gridOn = true;
+    }
 }
 
+//debugging function to log the shapes variable into the console
 void logShapes() {
     console.log(shapes);
     console.log(clicks);
@@ -127,12 +133,14 @@ void setTargetSequenceLength(length) {
     console.log(targetSequenceLength);
 }
 
+//push the current level onto the levels stack
 void saveCurrentLevel() {
     var currentLevel = levels[currentLevelNum];
     currentLevel.shapes = shapes;
     console.log(levels[currentLevelNum]);
 }
 
+//load the level from the levels stack into the canvas, also logs them into the console for debugging
 void loadLevel(levelNumber) {
     var loaded = levels[levelNumber - 1];
     console.log(loaded);
@@ -160,6 +168,7 @@ void endSetTargetSequence() {
     console.log(settingSequence);
 }
 
+//long switch, basically just takes vars from the bootstrap modal and creates new objects and pushes them into the current shapes object
 boolean createNewShape(type, size, color, xCoord, yCoord) {
     console.log("X coordinate: " + xCoord + " Y coordinate:" + yCoord);
 	if (type != null && size > 0) {
@@ -192,6 +201,7 @@ boolean createNewGrid(color, numRows, numColumns) {
     return true;
 }
 
+//mostly objects located below, shouldn't be doing a lot other than storing variables and helping with rendering functions
 void Level(levelshapes, number) {
     this.shapes = levelshapes;
     this.number = number;
@@ -285,13 +295,7 @@ void Line(tempColor, numRows, numColumns) {
     var screenHeight = screen.height;
     float rowOffset = screenHeight/numrows;
     float colOffset = screenWidth/numcolumns;
-    console.log("screen width " + screen.width);
-    console.log("screen height " + screen.height);
-    console.log("row offset " + rowOffset);
-    console.log("column offset " + colOffset);
- 
-    //this.show = function() {
-    //stroke(255);
+
     stroke(gridColor.r, gridColor.g, gridColor.b);
         for (int i = 0; i < numrows - 1; i = i+1) {
         console.log("row " + i + " Y coordinate: " + rowOffset*(i+1));
