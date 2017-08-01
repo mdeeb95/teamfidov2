@@ -64,7 +64,8 @@ function createGrid() {
     var numRows = $("#numRows").val();
     var numColumns = $("#numColumns").val();
     var rgb = hexToRgb(color);
-    var created = processingInstance.createNewGrid(rgb, numRows, numColumns);
+    var populate = $('#populate').is(':checked');
+    var created = processingInstance.createNewGrid(rgb, numRows, numColumns, populate);
     if (created) {
         $('#secondModal').modal('toggle');
     }

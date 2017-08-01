@@ -170,7 +170,7 @@ void endSetTargetSequence() {
 
 //long switch, basically just takes vars from the bootstrap modal and creates new objects and pushes them into the current shapes object
 boolean createNewShape(type, size, color, xCoord, yCoord) {
-    console.log("X coordinate: " + xCoord + " Y coordinate:" + yCoord);
+    console.log(color);
 	if (type != null && size > 0) {
 		switch(type) {
 			case 'circle':
@@ -192,12 +192,18 @@ boolean createNewShape(type, size, color, xCoord, yCoord) {
 	return false;
 }
 
-boolean createNewGrid(color, numRows, numColumns) {
-    console.log("num rows: " + numRows + " num columns:" + numColumns);
+boolean createNewGrid(color, numRows, numColumns, populate) {
     gridOn = true;
     numGridRows = numRows;
     numGridCols = numColumns;
     gridColor = color;
+    for (i = 0; i < numRows; i++) {
+        for (j = 0; j < numColumns; j++) {
+            var randomColor = "#000000".replace(/0/g,function(){return (~~(Math.random()*16)).toString(16);});
+            randomColor = hexToRgb(randomColor);
+            createNewShape('circle', 2, randomColor, (screen.width / numColumns * j + screen.width / numColumns / 2), (screen.height / numRows * i + screen.height / numRows / 2));
+        }
+    }
     return true;
 }
 
@@ -256,7 +262,7 @@ void Box(tempColor, tempSize, xCoord, yCoord) {
 }
 
 void Circle(tempColor, tempSize, xCoord, yCoord) {
-    this.c = tempColor
+    this.c = tempColor;
     this.xpos = xCoord;
     this.ypos = yCoord;
     this.shapesize = tempSize;
@@ -298,12 +304,10 @@ void Line(tempColor, numRows, numColumns) {
 
     stroke(gridColor.r, gridColor.g, gridColor.b);
         for (int i = 0; i < numrows - 1; i = i+1) {
-        console.log("row " + i + " Y coordinate: " + rowOffset*(i+1));
             //stroke(tempColor.r, tempColor.g, tempColor.b);
             line(0, 0+(rowOffset*(i+1)), screen.width, 0+(rowOffset*(i+1)));  
         }
         for (int i = 0; i < numcolumns - 1; i = i+1) {
-        console.log("column " + i + " X coordinate: " + colOffset*(i+1));
             //stroke(255,255,255);
             line(0+(colOffset*(i+1)), 0, 0+(colOffset*(i+1)), screen.height); 
             //stroke(tempColor.r, tempColor.g, tempColor.b); 
@@ -313,7 +317,7 @@ void Line(tempColor, numRows, numColumns) {
 }
 
 void Triangle(tempColor, tempSize, xCoord, yCoord) {
-    this.c = tempColor
+    this.c = tempColor;
     this.xpos = parseFloat(xCoord);
     this.ypos = parseFloat(yCoord);
     this.shapesize = tempSize;

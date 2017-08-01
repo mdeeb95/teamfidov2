@@ -57,11 +57,11 @@
 			</div>
 			<br/>
 			<button type="button" class="btn btn-info btn-lg" data-toggle="modal" onClick="setTargetSequenceLength()">Save Target Sequence Length</button>
-                        <br/>
-                        <br/>
+			<br/>
+			<br/>
 			<button onClick="setTargetSequence()" type="button" class="btn btn-success btn-lg" id="sequence-set-start">Choose Target Sequence</button>
-                        <button onClick="endSetTargetSequence()" type="button" class="btn btn-success btn-lg" id="sequence-set-end">Done</button>
-                        <hr/>
+			<button onClick="endSetTargetSequence()" type="button" class="btn btn-success btn-lg" id="sequence-set-end">Done</button>
+			<hr/>
 			<div class="form-group">
 				<label for="sel1">Select list:</label>
 				<select class="form-control" id="leveldropdown">
@@ -73,7 +73,7 @@
 			<button type="button" class="btn btn-info btn-lg" data-toggle="modal" onClick="loadLevel()">Load Level</button>
 			<hr/>
 			DEBUG:
-            <button onClick="logShapes()" type="button" class="btn btn-success btn-lg">Log Some Stuff</button>
+			<button onClick="logShapes()" type="button" class="btn btn-success btn-lg">Log Some Stuff</button>
 			<button onClick="saveCurrentLevel()" type="button" class="btn btn-success btn-lg">Save Level</button>
 			<button onClick="makeNewLevel()" type="button" class="btn btn-success btn-lg">Make New Level</button>
 			<button onClick="play()" type="button" class="btn btn-success btn-lg">Click Noise</button>
@@ -160,6 +160,17 @@
 								<input type="text" value="#00AABB" class="form-control" />
 								<span class="input-group-addon"><i></i></span>
 							</div>
+							<h4>Auto Populate</h4>
+							<div class="form-group row">
+								<div class="col-sm-10">
+									<div class="form-check">
+										<label class="form-check-label">
+											<input id="populate" class="form-check-input" type="checkbox">
+										</label>
+									</div>
+								</div>
+							</div>
+							<h3>Warning: AutoPopulate will delete current shapes</h3>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-primary" onClick="createGrid()">Create</button>
