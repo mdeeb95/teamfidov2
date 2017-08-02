@@ -25,7 +25,7 @@ var successfulHitSound = false;
 void setup() {
     //initializing basic processing canvas, and create an empty Level object to push to the Levels array
     size(screen.width, screen.height);
-    var startinglevel = new Level(shapes, currentLevelNum);
+    var startinglevel = new Level(shapes, currentLevelNum, targetSequence);
     levels.push(startinglevel);
 }
  
@@ -66,7 +66,7 @@ void mousePressed() {
         }
     } else {
         clicks.push(new ScreenPress(mouseX, mouseY, shapesover));
-        for (var i = 0; i < shapes.length; i++) {
+        for (var i = 0; i < shapes.length; i++) {           
             if (shapes[i].shapeover == true) {
                 var expectedShape = targetSequence[expectedShapeIndex];
                 if (expectedShape === shapes[i]) {
@@ -79,6 +79,7 @@ void mousePressed() {
                         }
                     successfulHitSound = true;
                     if (expectedShapeIndex === (targetSequence.length - 1)) {
+<<<<<<< HEAD
                         //lastShape = true
                         if (firstContact){
                             //var audioElement = document.createElement('audio');
@@ -88,6 +89,15 @@ void mousePressed() {
                         successfulHitSound = false;
                         unlockShapes();
                         //lastShape = false;
+=======
+                        //if (currentLevelValue === levels.length) {
+                            console.log("Done with the session.");
+                            unlockShapes();
+                        //} else {
+                        //    consol.log("Let's go to next level.")
+                        //    loadLevel(currentLevelValue + 1);
+                        //}
+>>>>>>> c7e42b2bb20700af9d1058bb6b5c2cc81d5ec0a2
                     } else {
                         expectedShapeIndex++;
                     }
@@ -167,6 +177,7 @@ void setTargetSequenceLength(length) {
 void saveCurrentLevel() {
     var currentLevel = levels[currentLevelNum];
     currentLevel.shapes = shapes;
+    currentLevel.targetSequence = targetSequence;
     console.log(levels[currentLevelNum]);
 }
 
@@ -175,17 +186,98 @@ void loadLevel(levelNumber) {
     var loaded = levels[levelNumber - 1];
     console.log(loaded);
     shapes = loaded.shapes;
+    console.log("Shapes: ")
     console.log(shapes);
+    targetSequence = loaded.targetSequence;
+    console.log("Sequences: ")
+    console.log(targetSequence);
 }
 
 void makeNewLevel() {
     var newshapes = [];
     shapes = newshapes;
-    var newlevel = new Level(newshapes, currentLevelNum + 1);
+    settingSequence = false;
+    targetSequenceLength = 3;
+    targetSequence = [];
+    expectedShapeIndex = -1;
+    var newlevel = new Level(newshapes, currentLevelNum + 1, targetSequence);
     currentLevelNum++;
     console.log(newlevel);
     levels.push(newlevel);
     return currentLevelNum;
+}
+
+void makeNewTappingTaskLevel(distance, diameter, angle) {
+    var yCoordCenter = screen.height / 2;
+    var xCoordCenter = screen.width / 2;
+
+    var xCoord1;
+    var xCoord2;
+    var yCoord1;
+    var yCoord2;
+
+    var distancePixels = ((distance + diameter) / 2) * DPI;
+    if (angle == 0) {
+        xCoord1 = xCoordCenter - distancePixels;
+        xCoord2 = xCoordCenter + distancePixels;
+        yCoord1 = yCoordCenter;
+        yCoord2 = yCoordCenter;
+    } else {
+        var angleRad = angle * (Math.PI / 180);
+        var yDiff = Math.sin(angleRad) * distancePixels;
+        var xDiff = Math.sqrt(Math.pow(distancePixels, 2) - Math.pow(angleRad, 2));
+
+        xCoord1 = xCoordCenter - xDiff;
+        xCoord2 = xCoordCenter + xDiff;
+        yCoord1 = yCoordCenter - yDiff;
+        yCoord2 = yCoordCenter + yDiff;
+    }
+
+    var shape1 = new Circle(hexToRgb("#2940f2"), diameter / 2, xCoord1, yCoord1);
+    var shape2 = new Circle(hexToRgb("#f1e428"), diameter / 2, xCoord2, yCoord2);
+
+    var newShapes = [];
+    newShapes.push(shape1, shape2);
+    shapes = newShapes;
+
+    var newLevel = new Level(newShapes, currentLevelNum + 1);
+    currentLevelNum++;
+    levels.push(newLevel);
+    return currentLevelNum;
+}
+
+void createTappingTask(distance_initial, distance_delta, distance_iterations, diameter_initial, diameter_delta, diameter_iterations, angle_initial, angle_delta, angle_iterations) {
+    levels = [];
+    currentLevelNum = 0;
+
+    if (distance_iterations == 0) {
+        distance_iterations = 1;
+    }
+    if (diameter_iterations == 0) {
+        diameter_iterations = 1;
+    }
+    if (angle_iterations == 0) {
+        angle_iterations = 1;
+    }
+
+    var cur_dist;
+    var cur_diam;
+    var cur_angle;
+
+    var newLevels = [];
+
+    for (var i = 0; i < distance_iterations; i++) {
+       cur_dist = distance_initial + (distance_delta * i);
+       for (var j = 0; j < diameter_iterations; j++) {
+           cur_diam = diameter_initial + (diameter_delta * j);
+           for (var k = 0; k < angle_iterations; k++) {
+               cur_angle = angle_initial + (angle_delta * k);
+
+               newLevels.push(makeNewTappingTaskLevel(cur_dist, cur_diam, cur_angle));
+           }
+       }
+    }
+    return newLevels;
 }
 
 void setTargetSequence() {
@@ -256,9 +348,10 @@ boolean createNewGrid(color, numRows, numColumns, populate) {
 }
 
 //mostly objects located below, shouldn't be doing a lot other than storing variables and helping with rendering functions
-void Level(levelshapes, number) {
+void Level(levelshapes, number, sequence) {
     this.shapes = levelshapes;
     this.number = number;
+    this.targetSequence = sequence;
 }
 
 void ScreenPress(x, y, clickedshapes) {
@@ -272,6 +365,16 @@ void ScreenPress(x, y, clickedshapes) {
 
 void fullscreen() {
     size(screen.width, screen.height);
+}
+
+void reset() {
+    levels = [];
+    shapes = [];
+    lines = [];
+    currentLevelNum = 1;
+
+    targetSequence = [];
+    expectedShapeIndex = -1;
 }
  
 void Box(tempColor, tempSize, xCoord, yCoord) {
@@ -397,6 +500,10 @@ void Triangle(tempColor, tempSize, xCoord, yCoord) {
 
 void getClicks() {
     return clicks;
+}
+
+void getLevels() {
+    return 
 }
 
 void exportData(args) {

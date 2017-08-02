@@ -28,19 +28,22 @@
 	<div class="container-fluid">
 		<div class="col-md-11">
 			<!--THIS IS ACTUAL CODE THAT MATTERS -->
-			<button onClick="lockShapes()" type="button" class="btn btn-warning btn-lg">
+			<button onClick="lockShapes()" type="button" class="btn btn-warning btn-lg menu-task">
 				<span class="glyphicon glyphicon glyphicon-ban-circle" aria-hidden="true">Lock</span>
 			</button>
-			<button onClick="unlockShapes()" type="button" class="btn btn-warning btn-lg">
+			<button onClick="unlockShapes()" type="button" class="btn btn-warning btn-lg menu-task">
 				<span class="glyphicon glyphicon glyphicon-ban-circle" aria-hidden="true">Unlock</span>
 			</button>
 			<button onClick="lockShapes()" type="button" class="btn btn-success btn-lg">Begin Recording</button>
 			<button onClick="unlockShapes()" type="button" class="btn btn-danger btn-lg">End Recording</button>
-			<button type="button" class="btn btn-info btn-lg" data-toggle="modal" onClick="addShapeModal()" data-target="#myModal">Add Shape</button>
+			<button type="button" class="btn btn-info btn-lg menu-task" data-toggle="modal" onClick="addShapeModal()" data-target="#myModal">Add Shape</button>
 
 			<!--New buttons to show / hide grid -->
-			<button type="button" class="btn btn-info btn-lg" data-toggle="modal" onClick="createGridModal()" data-target="#secondModal">Grid On</button>
+			<button type="button" class="btn btn-info btn-lg menu-task" data-toggle="modal" onClick="createGridModal()" data-target="#secondModal">Grid On</button>
 			<button type="button" class="btn btn-info btn-lg" onclick="downloadCSV({ filename: 'result.csv' });">Download CSV</button>
+                        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" onClick="tappingTaskModal()" data-target="#tappingTaskModal">Create Tapping Task</button>
+                        <button type="button" id="show-menu-task" class="btn btn-info btn-lg" data-toggle="modal" onClick="showMenuTaskOptions()">Create Menu Task</button>
+
 			<hr/>
 			<label for="screeninches">Screen Size</label>
 			<div class="input-group col-md-3">
@@ -50,17 +53,19 @@
 			<br/>
 			<button type="button" class="btn btn-info btn-lg" data-toggle="modal" onClick="updateDPI()">Save Screen Size</button>
 			<hr/>
-			<label for="target-sequence-length">Target Sequence Length</label>
-			<div class="input-group col-md-3">
-				<input id="target-sequence-length" type="text" class="form-control">
-				<span class="input-group-addon">Shapes</span>
-			</div>
-			<br/>
-			<button type="button" class="btn btn-info btn-lg" data-toggle="modal" onClick="setTargetSequenceLength()">Save Target Sequence Length</button>
-			<br/>
-			<br/>
-			<button onClick="setTargetSequence()" type="button" class="btn btn-success btn-lg" id="sequence-set-start">Choose Target Sequence</button>
-			<button onClick="endSetTargetSequence()" type="button" class="btn btn-success btn-lg" id="sequence-set-end">Done</button>
+                        <div class="menu-task">
+			  <label for="target-sequence-length">Target Sequence Length</label>
+			  <div class="input-group col-md-3">
+			    <input id="target-sequence-length" type="text" class="form-control">
+			    <span class="input-group-addon">Shapes</span>
+			  </div>
+			  <br/>
+			  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" onClick="setTargetSequenceLength()">Save Target Sequence Length</button>
+			  <br/>
+			  <br/>
+			  <button onClick="setTargetSequence()" type="button" class="btn btn-success btn-lg" id="sequence-set-start">Choose Target Sequence</button>
+			  <button onClick="endSetTargetSequence()" type="button" class="btn btn-success btn-lg" id="sequence-set-end">Done</button>
+                        </div>
 			<hr/>
 			<div class="form-group">
 				<label for="sel1">Select type of successfull contact indication:</label>
@@ -85,8 +90,8 @@
 			<hr/>
 			DEBUG:
 			<button onClick="logShapes()" type="button" class="btn btn-success btn-lg">Log Some Stuff</button>
-			<button onClick="saveCurrentLevel()" type="button" class="btn btn-success btn-lg">Save Level</button>
-			<button onClick="makeNewLevel()" type="button" class="btn btn-success btn-lg">Make New Level</button>
+			<button onClick="saveCurrentLevel()" type="button" class="btn btn-success btn-lg menu-task">Save Level</button>
+			<button onClick="makeNewLevel()" type="button" class="btn btn-success btn-lg menu-task">Make New Level</button>
 			<button onClick="play()" type="button" class="btn btn-success btn-lg">Click Noise</button>
 			<button onClick="fullscreen()" type="button" class="btn btn-success btn-lg">Fullscreen</button>
 			<!-- Trigger the modal with a button -->
@@ -188,6 +193,86 @@
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 						</div>
 					</div>
+				</div>
+			</div>
+			<div id="tappingTaskModal" tabindex="-1" class="modal fade" role="dialog" aria-hidden="true">
+				<div class="modal-dialog">
+					<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">Configure Tapping Task</h4>
+						</div>
+						<div class="modal-body">
+                                                  <table style="width:100%">
+                                                      <tr>
+                                                          <th></th>
+                                                          <th>Initial</th>
+                                                          <th>Delta</th> 
+                                                          <th>Iterations</th>
+                                                      </tr>
+                                                      <tr>
+                                                          <th>Distance</th>
+                                                          <td>
+			                                      <div class="input-group">
+			                                      	<input id="distance_initial" type="text" class="form-control">
+			                                      </div>
+                                                          </td>
+                                                          <td>
+			                                      <div class="input-group">
+			                                      	<input id="distance_delta" type="text" class="form-control">
+			                                      </div>
+                                                          </td>
+                                                          <td>
+			                                      <div class="input-group">
+			                                      	<input id="distance_iterations" type="text" class="form-control">
+			                                      </div>
+                                                          </td>
+                                                      </tr>
+                                                      <tr>
+                                                          <th>Diameter</th>
+                                                          <td>
+			                                      <div class="input-group">
+			                                      	<input id="diameter_initial" type="text" class="form-control">
+			                                      </div>
+                                                          </td>
+                                                          <td>
+			                                      <div class="input-group">
+			                                      	<input id="diameter_delta" type="text" class="form-control">
+			                                      </div>
+                                                          </td>
+                                                          <td>
+			                                      <div class="input-group">
+			                                      	<input id="diameter_iterations" type="text" class="form-control">
+			                                      </div>
+                                                          </td>
+                                                      </tr>
+                                                      <tr>
+                                                          <th>Angle</th>
+                                                          <td>
+			                                      <div class="input-group">
+			                                      	<input id="angle_initial" type="text" class="form-control">
+			                                      </div>
+                                                          </td>
+                                                          <td>
+			                                      <div class="input-group">
+			                                      	<input id="angle_delta" type="text" class="form-control">
+			                                      </div>
+                                                          </td>
+                                                          <td>
+			                                      <div class="input-group">
+			                                      	<input id="angle_iterations" type="text" class="form-control">
+			                                      </div>
+                                                          </td>
+                                                      </tr>
+                                                   </table>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" onClick="createTappingTask()">Create</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+
 				</div>
 			</div>
 			<div id="fullscreenModal" tabindex="-1" class="modal fade" role="dialog" aria-hidden="true">

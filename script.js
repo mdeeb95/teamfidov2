@@ -166,6 +166,61 @@ function createGridModal() {
     });
 }
 
+function tappingTaskModal() {
+}
+
+function createTappingTask() {
+
+    var distance_initial = Number($('#distance_initial').val());
+    var distance_delta = Number($('#distance_delta').val());
+    var distance_iterations = Number($('#distance_iterations').val());
+
+    var diameter_initial= Number($('#diameter_initial').val());
+    var diameter_delta = Number($('#diameter_delta').val());
+    var diameter_iterations = Number($('#diameter_iterations').val());
+
+    var angle_initial= Number($('#angle_initial').val());
+    var angle_delta = Number($('#angle_delta').val());
+    var angle_iterations = Number($('#angle_iterations').val());
+
+    processingInstance = Processing.getInstanceById('mainCanvas');
+    var newLevels = processingInstance.createTappingTask(distance_initial, distance_delta, distance_iterations, diameter_initial, diameter_delta, diameter_iterations, angle_initial, angle_delta, angle_iterations);
+
+    $('#leveldropdown').empty();
+    var newLevelNum;
+    for (var i = 0; i < newLevels.length; i++) {
+        newLevelNum = newLevels[i];
+        $('#leveldropdown').append($('<option>', {
+            value: newLevelNum,
+            text: newLevelNum
+        }));
+        $('#leveldropdown').val(newLevelNum);
+    }
+
+    $('.menu-task').hide();
+    $('#show-menu-task').show();
+
+    $('#tappingTaskModal').modal('toggle');
+}
+
+function showMenuTaskOptions() {
+    $('.menu-task').show();
+    $('#show-menu-task').hide();
+
+    reset();
+}
+
+function reset() {
+    $('#leveldropdown').empty();
+    $('#leveldropdown').append($('<option>', {
+        value: 1,
+        text: 1
+    }));
+
+    processingInstance = Processing.getInstanceById('mainCanvas');
+    processingInstance.reset();
+}
+
 function fullscreen() {
     //essentially a bunch of CSS trickery to make the screen appear fullscreen by auto scrolling to a full canvas
     processingInstance = Processing.getInstanceById('mainCanvas');
