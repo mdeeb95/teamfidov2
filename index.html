@@ -63,6 +63,17 @@
 			<button onClick="endSetTargetSequence()" type="button" class="btn btn-success btn-lg" id="sequence-set-end">Done</button>
 			<hr/>
 			<div class="form-group">
+				<label for="sel1">Select type of successfull contact indication:</label>
+				<select class="form-control" id="contactdropdown">
+					<option>First Contact</option>
+					<option>Lift Off</option>
+				</select>
+			</div>
+			<hr/>
+			<br/>
+			<button type="button" class="btn btn-info btn-lg" data-toggle="modal" onClick="loadContactType()">Load Contact Type</button>
+			<hr/>
+			<div class="form-group">
 				<label for="sel1">Select list:</label>
 				<select class="form-control" id="leveldropdown">
 					<option>1</option>

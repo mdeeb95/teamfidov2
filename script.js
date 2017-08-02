@@ -58,6 +58,17 @@ function createShape() {
 	}
 }
 
+/*function selectContactType() {
+    processingInstance = Processing.getInstanceById('mainCanvas');
+    var contactType = $("#contactdropdown").val();
+    processingInstance.contactSelection($("#contactdropdown").val());
+}*/
+
+function loadContactType() {
+    processingInstance = Processing.getInstanceById('mainCanvas');
+    processingInstance.contactSelection($('#contactdropdown').val());
+}
+
 function createGrid() {
     processingInstance = Processing.getInstanceById('mainCanvas');
     var color = $('#gridcolorpick').colorpicker('getValue');

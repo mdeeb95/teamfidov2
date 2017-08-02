@@ -15,6 +15,10 @@ var gridOn = false;
 var numGridRows = 0;
 var numGridCols = 0;
 var gridColor = "";
+//variables to hold type of successful shape contact
+var firstContact = false;
+var liftOff = false;
+var lastShape = false;
 
 var successfulHitSound = false;
  
@@ -35,6 +39,7 @@ void draw() {
         Line(gridColor, numGridRows, numGridCols);
     }
 }
+
  
 void mousePressed() {
     //detection for mouseover logic and mouse pressing logic, allows user to drag around a circle
@@ -67,12 +72,22 @@ void mousePressed() {
                 if (expectedShape === shapes[i]) {
                     console.log("got the right one!!!");
                     //Play a sound when the correct shape is detected
-                    var audioElement = document.createElement('audio');
-                    audioElement.setAttribute('src', 'tap-crisp.mp3');
-                    audioElement.play();
+                    if (firstContact){
+                        var audioElement = document.createElement('audio');
+                        audioElement.setAttribute('src', 'bluebeep.wav');
+                        audioElement.play();
+                        }
                     successfulHitSound = true;
                     if (expectedShapeIndex === (targetSequence.length - 1)) {
+                        //lastShape = true
+                        if (firstContact){
+                            //var audioElement = document.createElement('audio');
+                            audioElement.setAttribute('src', 'yellowbeep.wav');
+                            audioElement.play();
+                            }
+                        successfulHitSound = false;
                         unlockShapes();
+                        //lastShape = false;
                     } else {
                         expectedShapeIndex++;
                     }
@@ -98,12 +113,18 @@ void mouseReleased() {
     for (var i = 0; i < shapes.length; i++) {
         shapes[i].locked = false;
     }
-    if (successfulHitSound) {
+    if (successfulHitSound && liftOff) {
         var audioElement = document.createElement('audio');
-        audioElement.setAttribute('src', 'tap-crisp.mp3');
+        audioElement.setAttribute('src', 'bluebeep.wav');
         audioElement.play();
         successfulHitSound = false;
     }
+    /*if (successfulHitSound && liftOff && !lastShape) {
+        var audioElement = document.createElement('audio');
+        audioElement.setAttribute('src', 'yellowbeep.wav');
+        audioElement.play();
+        successfulHitSound = false;
+    }*/
 }
 
 
@@ -200,6 +221,21 @@ boolean createNewShape(type, size, color, xCoord, yCoord) {
 	}
 	return false;
 }
+
+void contactSelection(contactType){
+    if (contactType == "First Contact"){
+        firstContact = true;
+        liftOff = false;
+        console.log("firstContact = true:");
+    }
+    else if (contactType == "Lift Off"){
+        liftOff = true;
+        firstContact = false;
+        console.log("liftOff = true");
+    }
+    //console.log("firstContact: " + firstContact + " liftOff: " + liftOff);
+}
+
 
 boolean createNewGrid(color, numRows, numColumns, populate) {
     gridOn = true;
@@ -306,7 +342,6 @@ void Circle(tempColor, tempSize, xCoord, yCoord) {
 }
 
 void Line(tempColor, numRows, numColumns) {
-    //this.c = tempColor
     var numrows = numRows;
     var numcolumns = numColumns;
     var screenWidth = screen.width;
@@ -316,16 +351,11 @@ void Line(tempColor, numRows, numColumns) {
 
     stroke(gridColor.r, gridColor.g, gridColor.b);
         for (int i = 0; i < numrows - 1; i = i+1) {
-            //stroke(tempColor.r, tempColor.g, tempColor.b);
             line(0, 0+(rowOffset*(i+1)), screen.width, 0+(rowOffset*(i+1)));  
         }
         for (int i = 0; i < numcolumns - 1; i = i+1) {
-            //stroke(255,255,255);
             line(0+(colOffset*(i+1)), 0, 0+(colOffset*(i+1)), screen.height); 
-            //stroke(tempColor.r, tempColor.g, tempColor.b); 
-            //stroke(255,255,255);
         }
-    //};
 }
 
 void Triangle(tempColor, tempSize, xCoord, yCoord) {
