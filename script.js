@@ -1,5 +1,3 @@
-var processingInstance;
-
 function downloadCSV(args) {
     processingInstance = Processing.getInstanceById('mainCanvas');
     processingInstance.downloadCSV(args);
@@ -80,12 +78,6 @@ function createGrid() {
     if (created) {
         $('#secondModal').modal('toggle');
     }
-}
-
-function play(){
-    var audioElement = document.createElement('audio');
-    audioElement.setAttribute('src', 'tap-crisp.mp3');
-    audioElement.play();
 }
 
 function saveCurrentLevel() {

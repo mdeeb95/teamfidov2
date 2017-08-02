@@ -72,32 +72,20 @@ void mousePressed() {
                 if (expectedShape === shapes[i]) {
                     console.log("got the right one!!!");
                     //Play a sound when the correct shape is detected
-                    if (firstContact){
+                    if (firstContact) {
                         var audioElement = document.createElement('audio');
-                        audioElement.setAttribute('src', 'bluebeep.wav');
+                        audioElement.setAttribute('src', 'bluebeep.mp3');
                         audioElement.play();
-                        }
+                    }
                     successfulHitSound = true;
                     if (expectedShapeIndex === (targetSequence.length - 1)) {
-<<<<<<< HEAD
-                        //lastShape = true
-                        if (firstContact){
-                            //var audioElement = document.createElement('audio');
+                        lastShape = true;
+                        if (firstContact) {
+                            var audioElement = document.createElement('audio');
                             audioElement.setAttribute('src', 'yellowbeep.wav');
                             audioElement.play();
-                            }
-                        successfulHitSound = false;
+                        }
                         unlockShapes();
-                        //lastShape = false;
-=======
-                        //if (currentLevelValue === levels.length) {
-                            console.log("Done with the session.");
-                            unlockShapes();
-                        //} else {
-                        //    consol.log("Let's go to next level.")
-                        //    loadLevel(currentLevelValue + 1);
-                        //}
->>>>>>> c7e42b2bb20700af9d1058bb6b5c2cc81d5ec0a2
                     } else {
                         expectedShapeIndex++;
                     }
@@ -105,7 +93,6 @@ void mousePressed() {
             }
         }
     }
-    console.log("mousex: "+mouseX+" mouseY: "+mouseY);
     return false;
 }
  
@@ -125,16 +112,15 @@ void mouseReleased() {
     }
     if (successfulHitSound && liftOff) {
         var audioElement = document.createElement('audio');
-        audioElement.setAttribute('src', 'bluebeep.wav');
+        if (lastShape) {
+            audioElement.setAttribute('src', 'yellowbeep.wav');
+        } else {
+            audioElement.setAttribute('src', 'bluebeep.mp3');
+        }
         audioElement.play();
         successfulHitSound = false;
+        lastShape = false;
     }
-    /*if (successfulHitSound && liftOff && !lastShape) {
-        var audioElement = document.createElement('audio');
-        audioElement.setAttribute('src', 'yellowbeep.wav');
-        audioElement.play();
-        successfulHitSound = false;
-    }*/
 }
 
 
@@ -325,7 +311,6 @@ void contactSelection(contactType){
         firstContact = false;
         console.log("liftOff = true");
     }
-    //console.log("firstContact: " + firstContact + " liftOff: " + liftOff);
 }
 
 
