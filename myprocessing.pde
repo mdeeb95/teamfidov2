@@ -16,7 +16,7 @@ var numGridRows = 0;
 var numGridCols = 0;
 var gridColor = "";
 //variables to hold type of successful shape contact
-var firstContact = false;
+var firstContact = true;
 var liftOff = false;
 var lastShape = false;
 
