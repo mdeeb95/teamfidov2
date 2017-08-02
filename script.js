@@ -82,7 +82,7 @@ function createGrid() {
 
 function saveCurrentLevel() {
     processingInstance = Processing.getInstanceById('mainCanvas');
-    processingInstance.saveCurrentLevel(level);
+    processingInstance.saveCurrentLevel();
 }
 
 function makeNewLevel() {

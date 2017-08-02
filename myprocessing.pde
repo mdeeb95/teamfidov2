@@ -27,6 +27,16 @@ void setup() {
     size(screen.width, screen.height);
     var startinglevel = new Level(shapes, currentLevelNum, targetSequence);
     levels.push(startinglevel);
+    console.log(levels);
+
+    $( "#contactdropdown" ).change(function() {
+        liftOff = !liftOff;
+        firstContact = !firstContact;
+    });
+
+    $( "#leveldropdown" ).change(function() {
+        loadLevel($('#leveldropdown').val());
+    });
 }
  
 void draw() {
@@ -146,8 +156,7 @@ void unlockShapes() {
 
 //debugging function to log the shapes variable into the console
 void logShapes() {
-    console.log(shapes);
-    console.log(clicks);
+    console.log(levels);
 }
 
 void updateDPI(screensize) {
@@ -159,12 +168,11 @@ void setTargetSequenceLength(length) {
     console.log(targetSequenceLength);
 }
 
-//push the current level onto the levels stack
+//updates the current level in the level stack with the current shapes ... this is probably deprecated at this point
 void saveCurrentLevel() {
-    var currentLevel = levels[currentLevelNum];
+    var currentLevel = levels[currentLevelNum - 1];
     currentLevel.shapes = shapes;
     currentLevel.targetSequence = targetSequence;
-    console.log(levels[currentLevelNum]);
 }
 
 //load the level from the levels stack into the canvas, also logs them into the console for debugging
@@ -284,18 +292,20 @@ boolean createNewShape(type, size, color, xCoord, yCoord) {
 			case 'circle':
 			var newcircle = new Circle(color, size / 2, xCoord, yCoord);
 			shapes.push(newcircle);
+            saveCurrentLevel();
 			return true;
 			case 'square':
 			var newbox = new Box(color, size / 2, xCoord, yCoord);
 			shapes.push(newbox);
+            saveCurrentLevel();
 			return true;
 			case 'triangle':
             var newTriangle = new Triangle(color, size, xCoord, yCoord);
             shapes.push(newTriangle);
+            saveCurrentLevel();
             return true;
 			break;
 		}
-        saveCurrentLevel();
 	}
 	return false;
 }
