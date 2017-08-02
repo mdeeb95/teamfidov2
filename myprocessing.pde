@@ -19,6 +19,7 @@ var gridColor = "";
 var firstContact = true;
 var liftOff = false;
 var lastShape = false;
+var pauseScreen = false;
 
 var successfulHitSound = false;
  
@@ -46,6 +47,9 @@ void draw() {
     }
     if (gridOn) {
         Line(gridColor, numGridRows, numGridCols);
+    }
+    if (pauseScreen) {
+        background(0, 0, 0);
     }
 }
 
@@ -89,6 +93,15 @@ void mousePressed() {
                             audioElement.play();
                         }
                         unlockShapes();
+                        if (currentLevelNum != levels.length) {
+                            pauseScreen = true;
+                            setTimeout(function () {
+                                pauseScreen = false;
+                            }, 2000);
+                            currentLevelNum++;
+                            loadLevel(currentLevelNum);
+                            lockShapes();
+                        }
                     } else {
                         if (firstContact) {
                             var audioElement = document.createElement('audio');
