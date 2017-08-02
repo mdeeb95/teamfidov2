@@ -18,11 +18,9 @@ function setTargetSequence() {
 	processingInstance.setTargetSequence();
 
 	var done_button = document.getElementById('sequence-set-end');
-	console.log(done_button);
 	done_button.style.display = 'inline';
 
 	var start_button = document.getElementById('sequence-set-start');
-	console.log(start_button);
 	start_button.style.display = 'none';
 }
 
@@ -31,11 +29,9 @@ function endSetTargetSequence() {
 	processingInstance.endSetTargetSequence();
 
 	var done_button = document.getElementById('sequence-set-end');
-	console.log(done_button);
 	done_button.style.display = 'none';
 
 	var start_button = document.getElementById('sequence-set-start');
-	console.log(start_button);
 	start_button.style.display = 'inline';
 }
 

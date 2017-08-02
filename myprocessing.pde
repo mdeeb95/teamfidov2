@@ -27,7 +27,6 @@ void setup() {
     size(screen.width, screen.height);
     var startinglevel = new Level(shapes, currentLevelNum, targetSequence);
     levels.push(startinglevel);
-    console.log(levels);
 
     $( "#contactdropdown" ).change(function() {
         liftOff = !liftOff;
@@ -64,7 +63,6 @@ void mousePressed() {
                     if (targetSequence.indexOf(shapes[i]) === -1) {
                         targetSequence.push(shapes[i]);
                     }
-                    console.log(targetSequence);
                 }
             } else {
                 shapes[i].locked = false;
@@ -165,7 +163,6 @@ void updateDPI(screensize) {
 
 void setTargetSequenceLength(length) {
     targetSequenceLength = length;
-    console.log(targetSequenceLength);
 }
 
 //updates the current level in the level stack with the current shapes ... this is probably deprecated at this point
@@ -178,13 +175,8 @@ void saveCurrentLevel() {
 //load the level from the levels stack into the canvas, also logs them into the console for debugging
 void loadLevel(levelNumber) {
     var loaded = levels[levelNumber - 1];
-    console.log(loaded);
     shapes = loaded.shapes;
-    console.log("Shapes: ")
-    console.log(shapes);
     targetSequence = loaded.targetSequence;
-    console.log("Sequences: ")
-    console.log(targetSequence);
 }
 
 void makeNewLevel() {
@@ -196,7 +188,6 @@ void makeNewLevel() {
     expectedShapeIndex = -1;
     var newlevel = new Level(newshapes, currentLevelNum + 1, targetSequence);
     currentLevelNum++;
-    console.log(newlevel);
     levels.push(newlevel);
     return currentLevelNum;
 }
@@ -276,17 +267,14 @@ void createTappingTask(distance_initial, distance_delta, distance_iterations, di
 
 void setTargetSequence() {
     settingSequence = true;
-    console.log(settingSequence);
 }
 
 void endSetTargetSequence() {
     settingSequence = false;
-    console.log(settingSequence);
 }
 
 //long switch, basically just takes vars from the bootstrap modal and creates new objects and pushes them into the current shapes object
 boolean createNewShape(type, size, color, xCoord, yCoord) {
-    console.log(color);
 	if (type != null && size > 0) {
 		switch(type) {
 			case 'circle':
@@ -314,12 +302,10 @@ void contactSelection(contactType){
     if (contactType == "First Contact"){
         firstContact = true;
         liftOff = false;
-        console.log("firstContact = true:");
     }
     else if (contactType == "Lift Off"){
         liftOff = true;
         firstContact = false;
-        console.log("liftOff = true");
     }
 }
 
@@ -469,9 +455,7 @@ void Triangle(tempColor, tempSize, xCoord, yCoord) {
     this.show = function() {
         var pixelsize = this.shapesize * DPI;
         var height = (sqrt(3)/2)*pixelsize;
-        //console.log("height: " + height);
         var centerTriangle = height/3;
-        //console.log("centerTriangle: " + centerTriangle);
  
         if (dist(mouseX, mouseY, this.xpos, this.ypos) <= centerTriangle) {
             this.shapeover = true;
