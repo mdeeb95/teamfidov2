@@ -80,11 +80,6 @@ void mousePressed() {
                 if (expectedShape === shapes[i]) {
                     console.log("got the right one!!!");
                     //Play a sound when the correct shape is detected
-                    if (firstContact) {
-                        var audioElement = document.createElement('audio');
-                        audioElement.setAttribute('src', 'bluebeep.mp3');
-                        audioElement.play();
-                    }
                     successfulHitSound = true;
                     if (expectedShapeIndex === (targetSequence.length - 1)) {
                         lastShape = true;
@@ -95,6 +90,11 @@ void mousePressed() {
                         }
                         unlockShapes();
                     } else {
+                        if (firstContact) {
+                            var audioElement = document.createElement('audio');
+                            audioElement.setAttribute('src', 'bluebeep.mp3');
+                            audioElement.play();
+                        }
                         expectedShapeIndex++;
                     }
                 }
