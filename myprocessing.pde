@@ -22,6 +22,8 @@ var lastShape = false;
 var pauseScreen = false;
 
 var successfulHitSound = false;
+
+var tappingTaskMode = false;
  
 void setup() {
     //initializing basic processing canvas, and create an empty Level object to push to the Levels array
@@ -206,6 +208,7 @@ void makeNewLevel() {
     return currentLevelNum;
 }
 
+//Does all the calculations necessary to create a new tapping task level, such as x and y offsets given an angle, and creates the level
 void makeNewTappingTaskLevel(distance, diameter, angle) {
     var yCoordCenter = screen.height / 2;
     var xCoordCenter = screen.width / 2;
@@ -239,13 +242,18 @@ void makeNewTappingTaskLevel(distance, diameter, angle) {
     newShapes.push(shape1, shape2);
     shapes = newShapes;
 
-    var newLevel = new Level(newShapes, currentLevelNum + 1);
+    targetSequence.push(shape1);
+    targetSequence.push(shape2);
+
+    var newLevel = new Level(newShapes, currentLevelNum + 1, targetSequence);
     currentLevelNum++;
     levels.push(newLevel);
     return currentLevelNum;
 }
 
+//Creates all tapping task levels based on configuration info
 void createTappingTask(distance_initial, distance_delta, distance_iterations, diameter_initial, diameter_delta, diameter_iterations, angle_initial, angle_delta, angle_iterations) {
+    tappingTaskMode = true;
     levels = [];
     currentLevelNum = 0;
 
@@ -342,6 +350,17 @@ boolean createNewGrid(color, numRows, numColumns, populate) {
     return true;
 }
 
+void reset() {
+    tappingTaskMode = false;
+    levels = [];
+    shapes = [];
+    lines = [];
+    currentLevelNum = 1;
+
+    targetSequence = [];
+    expectedShapeIndex = -1;
+}
+
 //mostly objects located below, shouldn't be doing a lot other than storing variables and helping with rendering functions
 void Level(levelshapes, number, sequence) {
     this.shapes = levelshapes;
@@ -360,16 +379,6 @@ void ScreenPress(x, y, clickedshapes) {
 
 void fullscreen() {
     size(screen.width, screen.height);
-}
-
-void reset() {
-    levels = [];
-    shapes = [];
-    lines = [];
-    currentLevelNum = 1;
-
-    targetSequence = [];
-    expectedShapeIndex = -1;
 }
  
 void Box(tempColor, tempSize, xCoord, yCoord) {

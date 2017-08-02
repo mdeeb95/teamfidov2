@@ -154,11 +154,7 @@ function createGridModal() {
     });
 }
 
-function tappingTaskModal() {
-}
-
 function createTappingTask() {
-
     var distance_initial = Number($('#distance_initial').val());
     var distance_delta = Number($('#distance_delta').val());
     var distance_iterations = Number($('#distance_iterations').val());
@@ -187,6 +183,7 @@ function createTappingTask() {
 
     $('.menu-task').hide();
     $('#show-menu-task').show();
+    $('#mode').val("Tapping Task");
 
     $('#tappingTaskModal').modal('toggle');
 }
