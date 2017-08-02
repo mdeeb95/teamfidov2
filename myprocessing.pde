@@ -175,6 +175,7 @@ void saveCurrentLevel() {
 //load the level from the levels stack into the canvas, also logs them into the console for debugging
 void loadLevel(levelNumber) {
     var loaded = levels[levelNumber - 1];
+    currentLevelNum = levelNumber;
     shapes = loaded.shapes;
     targetSequence = loaded.targetSequence;
 }
