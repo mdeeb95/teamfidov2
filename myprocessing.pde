@@ -20,6 +20,7 @@ var firstContact = true;
 var liftOff = false;
 var lastShape = false;
 var pauseScreen = false;
+var randomShape = "";
 
 var successfulHitSound = false;
 
@@ -337,13 +338,22 @@ boolean createNewGrid(color, numRows, numColumns, populate) {
     numGridRows = numRows;
     numGridCols = numColumns;
     gridColor = color;
+    //autopopulate functionality to auto generate random sequences of shapes and colors
     if (populate) {
         shapes = [];
         for (i = 0; i < numRows; i++) {
             for (j = 0; j < numColumns; j++) {
                 var randomColor = "#000000".replace(/0/g,function(){return (~~(Math.random()*16)).toString(16);});
+                int randInt = int(random(3));
+                if (randInt == 0){
+                    randomShape = 'circle';
+                }else if (randInt == 1){
+                    randomShape = 'square';
+                } else if (randInt == 2){
+                    randomShape = 'triangle';
+                }
                 randomColor = hexToRgb(randomColor);
-                createNewShape('circle', screen.width/numColumns/DPI/3, randomColor, (screen.width / numColumns * j + screen.width / numColumns / 2), (screen.height / numRows * i + screen.height / numRows / 2));
+                createNewShape(randomShape, screen.width/numColumns/DPI/3, randomColor, (screen.width / numColumns * j + screen.width / numColumns / 2), (screen.height / numRows * i + screen.height / numRows / 2));
             }
         }
     }
